@@ -1,3 +1,4 @@
+/*eslint-env node*/
 "use strict";
 
 var gulp = require('gulp'),
@@ -22,6 +23,11 @@ gulp.task('lint', function () {
     .pipe(eslint.failOnError());
 });
 
+gulp.task('public', function () {
+  return gulp.src('src/public/**')
+    .pipe(gulp.dest('build/public/'));
+});
+
 gulp.task('bundle', ['lint'], function () {
   var isDev = process.env.NODE_ENV === 'development';
   // for NODE_ENV=development, add sourcemaps, don't minify
@@ -40,4 +46,4 @@ gulp.task('bundle', ['lint'], function () {
 });
 
 
-gulp.task('default', ['lint']);
+gulp.task('default', ['public', 'bundle']);
