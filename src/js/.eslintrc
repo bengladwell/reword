@@ -1,0 +1,12 @@
+{
+  "ecmaFeatures": {
+    "classes": true,
+    "arrowFunctions": true,
+    "jsx": true
+  },
+  "env": {
+    "commonjs": true,
+    "browser": true,
+    "node": false
+  }
+}
