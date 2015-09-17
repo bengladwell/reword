@@ -1,8 +1,6 @@
 {
   "env": {
-    "commonjs": false,
     "browser": false,
-    "es6": false,
     "node": true
   }
 }
