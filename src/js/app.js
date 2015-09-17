@@ -1,5 +1,6 @@
-"use strict";
+import React from 'react';
+import AvailableWords from './components/AvailableWords';
 
 document.addEventListener('DOMContentLoaded', function () {
-  document.getElementsByTagName('body')[0].appendChild(document.createTextNode('Hello World'));
+  React.render(<AvailableWords />, document.getElementsByTagName('body')[0]);
 });
