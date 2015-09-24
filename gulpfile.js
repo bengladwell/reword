@@ -10,6 +10,9 @@ var gulp = require('gulp'),
   watchify = require('watchify'),
   babelify = require('babelify'),
   uglify = require('gulp-uglify'),
+  sass = require('gulp-sass'),
+  sourcemaps = require('gulp-sourcemaps'),
+  util = require('gulp-util'),
   livereload = require('gulp-livereload'),
   nodemon = require('nodemon');
 
@@ -31,6 +34,18 @@ gulp.task('public', function () {
     .pipe(gulp.dest('build/public/'));
 });
 
+gulp.task('css', function () {
+  var isDev = process.env.NODE_ENV === 'development';
+  return gulp.src('src/scss/app.scss')
+    .pipe(isDev ? sourcemaps.init() : util.noop())
+    .pipe(sass({
+      includePaths: 'node_modules/material-design-lite/src/',
+      outputStyle: isDev ? 'nested' : 'compressed'
+    }))
+    .pipe(isDev ? sourcemaps.write() : util.noop())
+    .pipe(gulp.dest('build/public/css/'));
+});
+
 gulp.task('bundle', ['lint'], function () {
   var isDev = process.env.NODE_ENV === 'development';
   // for NODE_ENV=development, add sourcemaps, don't minify
@@ -47,7 +62,7 @@ gulp.task('bundle', ['lint'], function () {
     .pipe(gulp.dest('build/public/js/'));
 });
 
-gulp.task('serve', ['public', 'bundle'], function () {
+gulp.task('serve', ['public', 'css', 'bundle'], function () {
   var bundler = watchify(browserify({
       entries: './src/js/app.js',
       debug: true,
@@ -92,6 +107,9 @@ gulp.task('serve', ['public', 'bundle'], function () {
 
   // prime watchify cache
   bundler.bundle().pipe(source('app.js'));
+
+  gulp.watch('src/scss/**/*.scss', ['css']);
+  gulp.watch('src/public/**', ['public']);
 
   livereload.listen();
   gulp.watch('build/public/**').on('change', livereload.changed);
