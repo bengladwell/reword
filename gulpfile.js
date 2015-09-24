@@ -39,7 +39,6 @@ gulp.task('css', function () {
   return gulp.src('src/scss/app.scss')
     .pipe(isDev ? sourcemaps.init() : util.noop())
     .pipe(sass({
-      includePaths: 'node_modules/material-design-lite/src/',
       outputStyle: isDev ? 'nested' : 'compressed'
     }))
     .pipe(isDev ? sourcemaps.write() : util.noop())
