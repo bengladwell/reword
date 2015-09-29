@@ -1,0 +1,118 @@
+.appFont {
+  font-family: 'Roboto', 'Helvetica', sans-serif;
+}
+
+.display1 {
+  composes: appFont;
+  font-size: 34px;
+  font-weight: 400;
+  line-height: 40px;
+  opacity: 0.54;
+}
+
+.display2 {
+  composes: appFont;
+  font-size: 45px;
+  font-weight: 400;
+  line-height: 48px;
+  opacity: 0.54;
+}
+
+.display3 {
+  composes: appFont;
+  font-size: 56px;
+  font-weight: 400;
+  line-height: 1.35;
+  letter-spacing: -0.02em;
+  opacity: 0.54;
+}
+
+.display4 {
+  composes: appFont;
+  font-size: 112px;
+  font-weight: 300;
+  line-height: 1;
+  letter-spacing: -0.04em;
+  opacity: 0.54;
+}
+
+.headline {
+  composes: appFont;
+  font-size: 24px;
+  font-weight: 400;
+  line-height: 32px;
+  -moz-osx-font-smoothing: grayscale;
+  opacity: 0.87;
+}
+
+.title {
+  composes: appFont;
+  font-size: 20px;
+  font-weight: 500;
+  line-height: 1;
+  letter-spacing: 0.02em;
+  opacity: 0.87;
+}
+
+.subhead {
+  composes: appFont;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 24px;
+  letter-spacing: 0.04em;
+  opacity: 0.87;
+}
+
+.subhead2 {
+  composes: appFont;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 28px;
+  letter-spacing: 0.04em;
+  opacity: 0.87;
+}
+
+.body2 {
+  composes: appFont;
+  font-weight: 500;
+  line-height: 24px;
+  letter-spacing: 0;
+  opacity: 0.87;
+}
+
+.body1 {
+  composes: appFont;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 24px;
+  letter-spacing: 0;
+  opacity: 0.87;
+}
+
+.caption {
+  composes: appFont;
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 1;
+  letter-spacing: 0;
+  opacity: 0.54;
+}
+
+.blockquote {
+  composes: appFont;
+  position: relative;
+  font-size: 24px;
+  font-weight: 300;
+  font-style: italic;
+  line-height: 1.35;
+  letter-spacing: 0.08em;
+}
+.blockquote:before {
+  position: absolute;
+  left: -0.5em;
+  content: '“';
+}
+.blockquote:after {
+  content: '”';
+  margin-left: -0.05em;
+}

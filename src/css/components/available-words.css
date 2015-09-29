@@ -1,0 +1,7 @@
+.top {
+  padding: 20px;
+}
+.header {
+  composes: title from "../typography.css";
+  margin-bottom: 10px;
+}

@@ -11,6 +11,7 @@ var gulp = require('gulp'),
   babelify = require('babelify'),
   uglify = require('gulp-uglify'),
   sass = require('gulp-sass'),
+  cssModulesify = require('css-modulesify'),
   sourcemaps = require('gulp-sourcemaps'),
   util = require('gulp-util'),
   livereload = require('gulp-livereload'),
@@ -34,6 +35,7 @@ gulp.task('public', function () {
     .pipe(gulp.dest('build/public/'));
 });
 
+// TODO: remove this task and npm uninstall --save-dev gulp-sass if we no longer need preprocessing
 gulp.task('css', function () {
   var isDev = process.env.NODE_ENV === 'development';
   return gulp.src('src/scss/app.scss')
@@ -46,13 +48,20 @@ gulp.task('css', function () {
 });
 
 gulp.task('bundle', ['lint'], function () {
-  var isDev = process.env.NODE_ENV === 'development';
+  var isDev = process.env.NODE_ENV === 'development',
+    bundle = browserify({
+      entries: './src/js/app.js',
+      // sourcemaps
+      debug: isDev
+    });
+
+  bundle.plugin(cssModulesify, {
+    rootDir: './src/css',
+    output: './build/public/css/app.css'
+  });
+
   // for NODE_ENV=development, add sourcemaps, don't minify
-  return browserify({
-    entries: './src/js/app.js',
-    // sourcemaps
-    debug: isDev
-  })
+  return bundle
     .transform(babelify)
     .bundle()
     .pipe(source('app.js'))
@@ -62,14 +71,14 @@ gulp.task('bundle', ['lint'], function () {
 });
 
 gulp.task('serve', ['public', 'css', 'bundle'], function () {
-  var bundler = watchify(browserify({
+  var bundle = browserify({
       entries: './src/js/app.js',
       debug: true,
       cache: {},
       packageCache: {},
       fullPaths: true
-    }).transform(babelify)),
-
+    }),
+    bundler,
     update = function (files) {
       if (files) {
         gulp.src(files)
@@ -101,6 +110,13 @@ gulp.task('serve', ['public', 'css', 'bundle'], function () {
           }));
       }
     };
+
+  bundle.plugin(cssModulesify, {
+    rootDir: './src/css',
+    output: './build/public/css/app.css'
+  });
+
+  bundler = watchify(bundle.transform(babelify));
 
   bundler.on('update', update);
 

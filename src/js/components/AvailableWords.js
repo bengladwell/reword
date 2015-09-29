@@ -1,17 +1,16 @@
 import React, { Component } from 'react';
+import WordGroup from './WordGroup';
+
+import styles from '../../css/components/available-words.css';
 
 export default class AvailableWords extends Component {
   render() {
     var words = this.props.words || [];
 
     return (
-      <div>
-        <h1>Available Words</h1>
-        <ul>
-          {words.map(function (word) {
-            return <li key={word.id}>{word.text}</li>;
-          })}
-        </ul>
+      <div className={styles.top}>
+        <div className={styles.header}>Available Words</div>
+        <WordGroup words={words} />
       </div>
     );
   }
