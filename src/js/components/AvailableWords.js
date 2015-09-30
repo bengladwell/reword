@@ -9,7 +9,6 @@ export default class AvailableWords extends Component {
 
     return (
       <div className={styles.top}>
-        <div className={styles.header}>Available Words</div>
         <WordGroup words={words} />
       </div>
     );

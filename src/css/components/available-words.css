@@ -1,7 +1,5 @@
 .top {
   padding: 20px;
-}
-.header {
-  composes: title from "../typography.css";
-  margin-bottom: 10px;
+  width: 75%;
+  margin: 0 auto;
 }
