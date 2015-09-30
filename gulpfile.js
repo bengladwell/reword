@@ -14,6 +14,7 @@ var gulp = require('gulp'),
   cssModulesify = require('css-modulesify'),
   sourcemaps = require('gulp-sourcemaps'),
   util = require('gulp-util'),
+  merge = require('merge-stream'),
   livereload = require('gulp-livereload'),
   nodemon = require('nodemon');
 
@@ -31,8 +32,12 @@ gulp.task('lint', function () {
 });
 
 gulp.task('public', function () {
-  return gulp.src('src/public/**')
-    .pipe(gulp.dest('build/public/'));
+  return merge(
+    gulp.src('src/public/**')
+      .pipe(gulp.dest('build/public/')),
+    gulp.src('node_modules/normalize.css/normalize.css')
+      .pipe(gulp.dest('build/public/css/'))
+  );
 });
 
 // TODO: remove this task and npm uninstall --save-dev gulp-sass if we no longer need preprocessing
