@@ -1,6 +1,9 @@
 import React, { Component } from 'react';
 import AppBar from 'material-ui/lib/app-bar';
 import AvailableWords from './AvailableWords';
+import Theme from '../Theme';
+
+import ThemeManager from 'material-ui/lib/styles/theme-manager';
 
 const words = [
   {id: 0, text: 'hello'},
@@ -10,7 +13,13 @@ const words = [
   {id: 4, text: 'words'}
 ];
 
-export default class App extends Component {
+class App extends Component {
+  getChildContext() {
+    return {
+      muiTheme: ThemeManager.getMuiTheme(Theme)
+    };
+  }
+
   render() {
     return (
       <div className="app">
@@ -21,3 +30,8 @@ export default class App extends Component {
   }
 }
 
+App.childContextTypes = {
+  muiTheme: React.PropTypes.object
+};
+
+export default App;
