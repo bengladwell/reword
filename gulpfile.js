@@ -84,19 +84,23 @@ gulp.task('serve', ['public', 'css', 'bundle'], function () {
       fullPaths: true
     }),
     bundler,
+    isJs,
     update = function (files) {
       if (files) {
+        isJs = files.some(function (file) {
+          return file.match(/\.js$/);
+        });
         gulp.src(files)
-          .pipe(eslint({
+          .pipe(isJs ? eslint({
             rules: {
               "no-console": 0,
               "no-debugger": 0
             }
-          }))
-          .pipe(eslint.format())
+          }) : util.noop())
+          .pipe(isJs ? eslint.format() : util.noop())
           .pipe(util.buffer(function (err, bufferedFiles) {
             var hadErrors = bufferedFiles.some(function (file) {
-              return file.eslint.errorCount || file.eslint.warningCount;
+              return file.eslint && (file.eslint.errorCount || file.eslint.warningCount);
             });
 
             if (hadErrors) {
