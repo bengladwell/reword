@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, PropTypes } from 'react';
 import WordGroup from './WordGroup';
 import Sortable from 'sortablejs';
 
@@ -26,3 +26,10 @@ export default class AvailableWords extends Component {
     this.sortable = null;
   }
 }
+
+AvailableWords.propTypes = {
+  words: PropTypes.arrayOf(PropTypes.shape({
+    id: PropTypes.number.isRequired,
+    text: PropTypes.string.isRequired
+  }).isRequired).isRequired
+};
