@@ -6,5 +6,8 @@ export default Object.assign({}, LightTheme, {
     primary1Color: Colors.yellow300,
     primary2Color: Colors.yellow700,
     accent1Color: Colors.cyan200
-  })
+  }),
+  appBar: {
+    color: "#000"
+  }
 });

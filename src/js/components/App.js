@@ -4,6 +4,7 @@ import AvailableWords from './AvailableWords';
 import Theme from '../Theme';
 
 import ThemeManager from 'material-ui/lib/styles/theme-manager';
+import Colors from 'material-ui/lib/styles/colors';
 
 const words = [
   {id: 0, text: 'hello'},
@@ -15,8 +16,10 @@ const words = [
 
 class App extends Component {
   getChildContext() {
+    var theme = ThemeManager.getMuiTheme(Theme);
+    theme.appBar.textColor = Colors.lightBlack;
     return {
-      muiTheme: ThemeManager.getMuiTheme(Theme)
+      muiTheme: theme
     };
   }
 
