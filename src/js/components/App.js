@@ -14,7 +14,7 @@ const words = [
   {id: 4, text: 'words'}
 ];
 
-class App extends Component {
+export default class App extends Component {
   getChildContext() {
     var theme = ThemeManager.getMuiTheme(Theme);
     theme.appBar.textColor = Colors.lightBlack;
@@ -36,5 +36,3 @@ class App extends Component {
 App.childContextTypes = {
   muiTheme: React.PropTypes.object
 };
-
-export default App;
