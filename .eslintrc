@@ -94,7 +94,6 @@
     "no-spaced-func": 2,
     "no-trailing-spaces": 2,
     "no-underscore-dangle": 2,
-    "one-var": 2,
     "semi-spacing": 2,
     "semi": 2,
     "space-after-keywords": 2,
