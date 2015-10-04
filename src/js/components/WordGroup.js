@@ -8,7 +8,7 @@ export default class WordGroup extends Component {
     var words = this.props.words || [];
 
     return (
-      <div className={styles.top}>
+      <div className={styles.root}>
         {words.map(function (word) {
           return <Word key={word.id} word={word.text} />;
         })}

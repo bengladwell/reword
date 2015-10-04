@@ -9,7 +9,7 @@ export default class AvailableWords extends Component {
     var words = this.props.words || [];
 
     return (
-      <div className={styles.top}>
+      <div className={styles.root}>
         <WordGroup words={words} ref="available"/>
       </div>
     );
