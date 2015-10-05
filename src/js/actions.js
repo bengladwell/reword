@@ -18,9 +18,10 @@ export function moveWord(word, space, index) {
   };
 }
 
-export function addWord(text) {
+export function addWord(id, text) {
   return {
     type: ADD_WORD,
+    id,
     text
   };
 }

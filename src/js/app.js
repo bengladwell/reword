@@ -3,20 +3,19 @@ import { createStore } from 'redux';
 import { Provider } from 'react-redux';
 import stateTransformer from './reducers';
 import App from './components/App';
+import Firebase from 'firebase';
 
 import { addWord } from './actions';
 
-const words = ['hello', 'here', 'are', 'some', 'words'];
-
 let store = createStore(stateTransformer),
-  i = 0,
-  cancelInterval = setInterval(() => {
-    store.dispatch(addWord(words[i]));
-    i += 1;
-    if (i === words.length) {
-      clearInterval(cancelInterval);
-    }
-  }, 300);
+  fireWords = new Firebase('https://reword.firebaseio.com').child('words');
+
+fireWords.once('value', function (data) {
+  let words = data.val();
+  for (let id in words) {
+    store.dispatch(addWord(id, words[id].text));
+  }
+});
 
 document.addEventListener('DOMContentLoaded', function () {
   React.render(

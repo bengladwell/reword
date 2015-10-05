@@ -46,10 +46,10 @@ const stateTransformer = function (state = initialState, action) {
     // as long as there is no REMOVE_WORD action this seems safe
     return Object.assign({}, state, {
       words: state.words.concat({
-        id: state.words.length,
+        id: action.id,
         text: action.text
       }),
-      availableWords: state.availableWords.concat(state.words.length)
+      availableWords: state.availableWords.concat(action.id)
     });
 
   default:
