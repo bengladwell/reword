@@ -1,5 +1,5 @@
 {
-  "name": "quip",
+  "name": "reword",
   "version": "0.0.1",
   "description": "Phrase game in React/Redux",
   "main": "src/js/server.js",

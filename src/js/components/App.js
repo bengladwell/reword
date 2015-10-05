@@ -23,7 +23,7 @@ class App extends Component {
     const { dispatch, availableWords, phraseWords } = this.props;
     return (
       <div className="app">
-        <AppBar title="quip" showMenuIconButton={false}/>
+        <AppBar title="reword" showMenuIconButton={false}/>
         <AvailableWords
           words={availableWords}
           onMoveWord={(word, space) =>

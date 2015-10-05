@@ -1,4 +1,4 @@
-# Quip
+# Reword
 ## An experiment in React and Redux
 
 To build:  
