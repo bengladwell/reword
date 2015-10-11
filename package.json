@@ -12,7 +12,10 @@
     "eslint-plugin-react": "^3.4.1",
     "express": "^4.13.3",
     "firebase": "^2.3.1",
+    "history": "^1.12.3",
     "react": "^0.13.3",
+    "react-router": "^1.0.0-rc3",
+    "redux-router": "^1.0.0-beta3",
     "serve-static": "^1.10.0"
   },
   "devDependencies": {

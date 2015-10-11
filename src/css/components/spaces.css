@@ -1,0 +1,10 @@
+.root {
+  padding: 20px;
+}
+.wordGroup {
+  composes: clearfix from "../common.css";
+}
+.phrase {
+  composes: wordGroup;
+  min-height: 50px;
+}

@@ -1,17 +1,32 @@
 import { MOVE_WORD, ADD_WORD, Spaces } from './actions';
 import { update } from 'react/addons';
 
-const initialState = {
-  words: [],
-  availableWords: [],
-  phraseWords: []
-};
+/* state: {
+ *  words: {
+ *    index: [{ id: backend_id, text: word }, ...],
+ *    available: [<id>, ...],
+ *    phrase: [<id>, ...]
+ *  }
+ *  settings: { ... },
+ *  router: <from react-router/redux-router>
+ * }
+ */
 
-const stateTransformer = function (state = initialState, action) {
+export function words(state = {index: [], available: [], phrase: []}, action) {
   switch (action.type) {
+  case ADD_WORD:
+    return Object.assign({}, state, {
+      //index: Object.assign({}, state.index, {[action.id]: action.text}),
+      index: state.index.concat({
+        id: action.id,
+        text: action.text
+      }),
+      available: state.available.concat(action.id)
+    });
+
   case MOVE_WORD:
-    if (action.space === Spaces.AVAILABLE && state.availableWords[action.index] === action.word ||
-        action.space === Spaces.PHRASE && state.phraseWords[action.index] === action.word) {
+    if (action.space === Spaces.AVAILABLE && state.available[action.index] === action.word ||
+        action.space === Spaces.PHRASE && state.phrase[action.index] === action.word) {
       return state;
     }
 
@@ -19,21 +34,21 @@ const stateTransformer = function (state = initialState, action) {
 
     if (action.space === Spaces.AVAILABLE) {
       return Object.assign({}, state, {
-        availableWords: update(state.availableWords.filter(function (id) {
+        available: update(state.available.filter(function (id) {
           return id !== action.word;
         }), {$splice: [[action.index, 0, action.word]]}),
-        phraseWords: state.phraseWords.filter(function (id) {
+        phrase: state.phrase.filter(function (id) {
           return id !== action.word;
         })
       });
     }
 
-    if (action.space === Spaces.AVAILABLE) {
+    if (action.space === Spaces.PHRASE) {
       return Object.assign({}, state, {
-        availableWords: state.availableWords.filter(function (id) {
+        available: state.available.filter(function (id) {
           return id !== action.word;
         }),
-        phraseWords: update(state.phraseWords.filter(function (id) {
+        phrase: update(state.phrase.filter(function (id) {
           return id !== action.word;
         }), {$splice: [[action.index, 0, action.word]]})
       });
@@ -41,20 +56,7 @@ const stateTransformer = function (state = initialState, action) {
 
     throw new TypeError('Unknown space for MOVE_WORD action');
 
-  case ADD_WORD:
-    // just use the length of the array of words;
-    // as long as there is no REMOVE_WORD action this seems safe
-    return Object.assign({}, state, {
-      words: state.words.concat({
-        id: action.id,
-        text: action.text
-      }),
-      availableWords: state.availableWords.concat(action.id)
-    });
-
   default:
     return state;
   }
-};
-
-export default stateTransformer;
+}
