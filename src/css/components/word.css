@@ -3,6 +3,7 @@
   float: left;
   margin: 0 5px 5px 0;
   padding: 0 5px;
+  cursor: move;
 }
 .text {
   composes: display1 from "../typography.css";
