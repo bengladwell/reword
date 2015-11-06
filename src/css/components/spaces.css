@@ -1,5 +1,5 @@
 .root {
-  padding: 20px;
+  composes: main from "./app.css";
 }
 .wordGroup {
   composes: clearfix from "../common.css";

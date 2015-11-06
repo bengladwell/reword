@@ -18,7 +18,7 @@ const store = reduxReactRouter({ createHistory })(createStore)(reducer);
 
 const fireWords = new Firebase('https://reword.firebaseio.com').child('words');
 
-fireWords.once('value', function (data) {
+fireWords.once('value', (data) => {
   let fwords = data.val();
   for (let id in fwords) {
     store.dispatch(addWord(id, fwords[id].text));
