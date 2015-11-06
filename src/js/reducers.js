@@ -1,5 +1,5 @@
 import { MOVE_WORD, ADD_WORD, Spaces } from './actions';
-import { update } from 'react/addons';
+import update from 'react-addons-update';
 
 /* state: {
  *  words: {

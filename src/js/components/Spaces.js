@@ -31,13 +31,12 @@ class Spaces extends Component {
   }*/
 
   componentDidMount() {
-    // 0.14.0 - findDOMNode no longer needed
     this.sortable = {
-      available: new Sortable(React.findDOMNode(this.refs.available), {
+      available: new Sortable(this.refs.available, {
         group: 'spaces',
         animation: 300
       }),
-      phrase: new Sortable(React.findDOMNode(this.refs.phrase), {
+      phrase: new Sortable(this.refs.phrase, {
         group: 'spaces',
         animation: 300
       })

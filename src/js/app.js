@@ -1,4 +1,5 @@
 import React from 'react';
+import ReactDOM from 'react-dom';
 import { createStore, combineReducers } from 'redux';
 import { routerStateReducer, reduxReactRouter } from 'redux-router';
 import createHistory from 'history/lib/createBrowserHistory';
@@ -25,5 +26,5 @@ fireWords.once('value', function (data) {
 });
 
 document.addEventListener('DOMContentLoaded', function () {
-  React.render(<Root store={store} />, document.getElementById('root'));
+  ReactDOM.render(<Root store={store} />, document.getElementById('root'));
 });

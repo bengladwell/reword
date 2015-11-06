@@ -11,14 +11,12 @@ export default class Root extends Component {
   render() {
     return (
       <Provider store={this.props.store}>
-        {() =>
-          <ReduxRouter>
-            <Route path="/" component={App}>
-              <IndexRoute component={Spaces} />
-              <Route path="settings" component={Settings} />
-            </Route>
-          </ReduxRouter>
-        }
+        <ReduxRouter>
+          <Route path="/" component={App}>
+            <IndexRoute component={Spaces} />
+            <Route path="settings" component={Settings} />
+          </Route>
+        </ReduxRouter>
       </Provider>
     );
   }
