@@ -1,53 +1,41 @@
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
-import Sortable from 'sortablejs';
+import { DragDropContext as ddContext } from 'react-dnd';
+import HTML5Backend from 'react-dnd-html5-backend';
+
+import { Spaces as SpaceEnums } from '../actions';
 
 import styles from '../../css/components/spaces.css';
-import Word from './Word';
+import DraggableWord from './DraggableWord';
+import WordDropZone from './WordDropZone';
 
 class Spaces extends Component {
   render() {
-    // injected by connect()
-    //const { dispatch, available, phrase } = this.props;
     const { available, phrase } = this.props;
     return (
       <div className={styles.root}>
         <div ref="available" className={styles.wordGroup}>
-          {available.map(function (word) {
-            return <Word key={word.id} word={word.text} />;
+          {available.map(function (word, i) {
+            return <div key={word.id}>
+              <WordDropZone index={i} space={SpaceEnums.AVAILABLE} />
+              <DraggableWord id={word.id} text={word.text} />
+            </div>;
           })}
+          <WordDropZone index={available.length} space={SpaceEnums.AVAILABLE} isLast={true} />
         </div>
         <div ref="phrase" className={styles.phrase}>
-          {phrase.map(function (word) {
-            return <Word key={word.id} word={word.text} />;
+          {phrase.map(function (word, i) {
+            return <div key={word.id}>
+              <WordDropZone index={i} space={SpaceEnums.PHRASE} />
+              <DraggableWord id={word.id} text={word.text} />
+            </div>;
           })}
+          <WordDropZone index={phrase.length} space={SpaceEnums.PHRASE} isLast={true} />
         </div>
       </div>
     );
   }
 
-  /*onMoveWord(word, space) {
-    this.props.dispatch(moveWord(word, space))
-  }*/
-
-  componentDidMount() {
-    this.sortable = {
-      available: new Sortable(this.refs.available, {
-        group: 'spaces',
-        animation: 300
-      }),
-      phrase: new Sortable(this.refs.phrase, {
-        group: 'spaces',
-        animation: 300
-      })
-    };
-  }
-
-  componentWillUnmount() {
-    this.sortable.available.destroy();
-    this.sortable.phrase.destroy();
-    this.sortable = null;
-  }
 }
 
 Spaces.propTypes = {
@@ -74,4 +62,4 @@ function select(state) {
   };
 }
 
-export default connect(select)(Spaces);
+export default connect(select)(ddContext(HTML5Backend)(Spaces));

@@ -7,4 +7,7 @@
 .phrase {
   composes: wordGroup;
   min-height: 50px;
+  border-radius: 4px;
+  border: 2px dashed #EEE;
+  margin-top: 20px;
 }

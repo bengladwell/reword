@@ -1,0 +1,14 @@
+.root {
+  background-color: #eee;
+  width: 5px;
+  height: 40px;
+  float: left;
+}
+.isLast {
+  composes: root;
+  width: 20px;
+}
+.hover {
+  composes: root;
+  width: 50px;
+}
