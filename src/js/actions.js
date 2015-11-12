@@ -1,5 +1,6 @@
 export const MOVE_WORD = 'MOVE_WORD';
 export const ADD_WORD = 'ADD_WORD';
+export const ADD_USER = 'ADD_USER';
 
 export const Spaces = {
   AVAILABLE: 'AVAILABLE',
@@ -23,5 +24,12 @@ export function addWord(id, text) {
     type: ADD_WORD,
     id,
     text
+  };
+}
+
+export function addUser(user) {
+  return {
+    type: ADD_USER,
+    user
   };
 }

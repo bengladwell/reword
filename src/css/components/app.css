@@ -1,3 +1,11 @@
 .main {
   padding: 20px;
 }
+
+.label {
+  color: #fff;
+  position: relative;
+  top: -4px;
+  font-size: 18px;
+  margin: 0 8px;
+}

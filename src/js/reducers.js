@@ -1,4 +1,4 @@
-import { MOVE_WORD, ADD_WORD, Spaces } from './actions';
+import { MOVE_WORD, ADD_WORD, ADD_USER, Spaces } from './actions';
 import update from 'react-addons-update';
 
 /* state: {
@@ -8,12 +8,25 @@ import update from 'react-addons-update';
  *    phrase: [<id>, ...]
  *  }
  *  settings: { ... },
- *  router: <from react-router/redux-router>
+ *  router: <from react-router/redux-router>,
+ *  user: { ... }
  * }
  */
 
+export function user(state = null, action) {
+  switch (action.type) {
+
+  case ADD_USER:
+    return action.user;
+
+  default:
+    return state;
+  }
+}
+
 export function words(state = {index: [], available: [], phrase: []}, action) {
   switch (action.type) {
+
   case ADD_WORD:
     return Object.assign({}, state, {
       //index: Object.assign({}, state.index, {[action.id]: action.text}),
