@@ -1,7 +1,8 @@
 /*eslint-env node*/
 "use strict";
 
-var gulp = require('gulp'),
+var _ = require('underscore'),
+  gulp = require('gulp'),
   util = require('gulp-util'),
   source = require('vinyl-source-stream'),
   buffer = require('vinyl-buffer'),
@@ -10,9 +11,7 @@ var gulp = require('gulp'),
   watchify = require('watchify'),
   babelify = require('babelify'),
   uglify = require('gulp-uglify'),
-  sass = require('gulp-sass'),
   cssModulesify = require('css-modulesify'),
-  sourcemaps = require('gulp-sourcemaps'),
   util = require('gulp-util'),
   merge = require('merge-stream'),
   livereload = require('gulp-livereload'),
@@ -40,18 +39,6 @@ gulp.task('public', function () {
   );
 });
 
-// TODO: remove this task and npm uninstall --save-dev gulp-sass if we no longer need preprocessing
-gulp.task('css', function () {
-  var isDev = process.env.NODE_ENV === 'development';
-  return gulp.src('src/scss/app.scss')
-    .pipe(isDev ? sourcemaps.init() : util.noop())
-    .pipe(sass({
-      outputStyle: isDev ? 'nested' : 'compressed'
-    }))
-    .pipe(isDev ? sourcemaps.write() : util.noop())
-    .pipe(gulp.dest('build/public/css/'));
-});
-
 gulp.task('bundle', ['lint'], function () {
   var isDev = process.env.NODE_ENV === 'development',
     bundle = browserify({
@@ -75,7 +62,7 @@ gulp.task('bundle', ['lint'], function () {
     .pipe(gulp.dest('build/public/js/'));
 });
 
-gulp.task('serve', ['public', 'css', 'bundle'], function () {
+gulp.task('serve', ['public', 'bundle'], function () {
   var bundle = browserify({
       entries: './src/js/app.js',
       debug: true,
@@ -127,16 +114,15 @@ gulp.task('serve', ['public', 'css', 'bundle'], function () {
 
   bundler = watchify(bundle.transform(babelify));
 
-  bundler.on('update', update);
-
   // prime watchify cache
   bundler.bundle().pipe(source('app.js'));
 
-  gulp.watch('src/scss/**/*.scss', ['css']);
+  bundler.on('update', update);
+
   gulp.watch('src/public/**', ['public']);
 
   livereload.listen();
-  gulp.watch('build/public/**').on('change', livereload.changed);
+  gulp.watch('build/public/**').on('change', _.throttle(livereload.changed, 500));
 
   nodemon({
     script: 'src/js/server/index.js',
