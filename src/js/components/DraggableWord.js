@@ -8,7 +8,8 @@ import styles from '../../css/components/draggable-word.css';
 const wordSource = {
   beginDrag(props) {
     return {
-      id: props.id
+      id: props.id,
+      index: props.index
     };
   }
 };
@@ -32,6 +33,7 @@ class DraggableWord extends Component {
 DraggableWord.propTypes = {
   connectDragSource: PropTypes.func.isRequired,
   isDragging: PropTypes.bool.isRequired,
+  index: PropTypes.number.isRequired,
   text: PropTypes.string.isRequired
 };
 

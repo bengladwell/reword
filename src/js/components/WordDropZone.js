@@ -7,7 +7,7 @@ import styles from '../../css/components/word-drop-zone.css';
 
 const wordTarget = {
   drop(props, monitor, dropZone) {
-    dropZone.context.store.dispatch(moveWord(monitor.getItem().id, props.space, props.index));
+    dropZone.context.store.dispatch(moveWord(monitor.getItem().id, props.space, monitor.getItem().index < props.index ? props.index - 1 : props.index));
   }
 };
 

@@ -18,7 +18,7 @@ class Spaces extends Component {
           {available.map(function (word, i) {
             return <div key={word.id}>
               <WordDropZone index={i} space={SpaceEnums.AVAILABLE} />
-              <DraggableWord id={word.id} text={word.text} />
+              <DraggableWord id={word.id} index={i} text={word.text} />
             </div>;
           })}
           <WordDropZone index={available.length} space={SpaceEnums.AVAILABLE} isLast={true} />
@@ -27,7 +27,7 @@ class Spaces extends Component {
           {phrase.map(function (word, i) {
             return <div key={word.id}>
               <WordDropZone index={i} space={SpaceEnums.PHRASE} />
-              <DraggableWord id={word.id} text={word.text} />
+              <DraggableWord id={word.id} index={i} text={word.text} />
             </div>;
           })}
           <WordDropZone index={phrase.length} space={SpaceEnums.PHRASE} isLast={true} />
