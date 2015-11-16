@@ -1,4 +1,4 @@
-import { MOVE_WORD, ADD_WORD, ADD_USER, Spaces } from './actions';
+import { MOVE_WORD, ADD_WORD, ADD_WORDS, ADD_USER, Spaces } from './actions';
 import update from 'react-addons-update';
 
 /* state: {
@@ -35,6 +35,19 @@ export function words(state = {index: [], available: [], phrase: []}, action) {
         text: action.text
       }),
       available: state.available.concat(action.id)
+    });
+
+  case ADD_WORDS:
+    return Object.assign({}, state, {
+      index: state.index.concat(action.words.map((word) => {
+        return {
+          id: word.id,
+          text: word.text
+        };
+      })),
+      available: state.available.concat(action.words.map((word) => {
+        return word.id;
+      }))
     });
 
   case MOVE_WORD:

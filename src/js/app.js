@@ -1,3 +1,4 @@
+import _map from 'lodash.map';
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { createStore, combineReducers } from 'redux';
@@ -7,7 +8,7 @@ import Firebase from 'firebase';
 
 import { words, user as userReducer } from './reducers';
 import Root from './components/Root';
-import { addWord, addUser } from './actions';
+import { addWords, addUser } from './actions';
 
 const reducer = combineReducers({
   router: routerStateReducer,
@@ -33,9 +34,12 @@ firebase.onAuth((authData) => {
 
 firebase.child('words').once('value', (data) => {
   let fwords = data.val();
-  for (let id in fwords) {
-    store.dispatch(addWord(id, fwords[id].text));
-  }
+  store.dispatch(addWords(_map(fwords, (w, id) => {
+    return {
+      id: id,
+      text: w.text
+    };
+  })));
 });
 
 document.addEventListener('DOMContentLoaded', () => {

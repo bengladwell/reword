@@ -1,5 +1,6 @@
 export const MOVE_WORD = 'MOVE_WORD';
 export const ADD_WORD = 'ADD_WORD';
+export const ADD_WORDS = 'ADD_WORDS';
 export const ADD_USER = 'ADD_USER';
 
 export const Spaces = {
@@ -24,6 +25,13 @@ export function addWord(id, text) {
     type: ADD_WORD,
     id,
     text
+  };
+}
+
+export function addWords(words) {
+  return {
+    type: ADD_WORDS,
+    words
   };
 }
 
