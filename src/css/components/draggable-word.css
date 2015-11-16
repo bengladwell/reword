@@ -1,3 +1,4 @@
 .root {
-  cursor: move;
+  composes: clearfix from "../common.css";
+  float: left;
 }

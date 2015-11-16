@@ -35,7 +35,7 @@ class Settings extends Component {
             <div className={styles.heading}>Available words</div>
             <div ref="available" className={styles.wordGroup}>
               {available.map(function (word) {
-                return <Word key={word.id} word={word.text} />;
+                return <Word key={word.id} text={word.text} />;
               })}
             </div>
             <div className={styles.addWords}>

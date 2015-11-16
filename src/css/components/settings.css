@@ -9,10 +9,10 @@
 .wordGroup {
   composes: wordGroup from "./spaces.css";
   margin: 0 auto;
-  width: 75%;
+  width: 85%;
   padding-top: 20px;
 }
 .addWords {
   margin: 0 auto;
-  width: 75%;
+  width: 85%;
 }

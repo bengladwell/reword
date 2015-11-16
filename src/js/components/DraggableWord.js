@@ -24,7 +24,7 @@ class DraggableWord extends Component {
   render() {
     const { connectDragSource, isDragging, text } = this.props;
     return connectDragSource(
-      <div className={styles.root}>{isDragging ? null : <Word text={text} />}</div>
+      <div className={styles.root}>{isDragging ? null : <Word text={text} draggable={true} />}</div>
     );
   }
 }

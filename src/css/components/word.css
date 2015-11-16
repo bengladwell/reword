@@ -3,8 +3,16 @@
   float: left;
   margin: 0 0 5px 0;
   padding: 0 5px;
+  cursor: default;
+}
+.draggable {
+  composes: root;
   cursor: move;
 }
 .text {
-  composes: display1 from "../typography.css";
+  composes: appFont from "../typography.css";
+  font-size: 18px;
+  font-weight: 400;
+  line-height: 24px;
+  opacity: 0.64;
 }
