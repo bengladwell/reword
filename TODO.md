@@ -1,16 +1,16 @@
 need a way to switch between edit mode and display mode.
 at launch, app is in display mode.
 
-display mode will require three new branches of the state tree: phrases, users, and active\_phrase.
+display mode will require new branches of the state tree: phrases, and active\_phrase.
  - phrases indexed by id
  - phrase objects have user id and words, an array of word ids
  - active\_phrase is an id, updated to change the displayed phrase
- - users is an object of users, indexed by id, containing name and avatar
 
 # Display mode
 * the available words area and the phrase area rearrange to show the active phrase
 * there should be a timeline indicator
 * there should be a user info area with name and avatar to show who made the phrase
+  * user info can be fetched from firebase by id when needed
 * there should be a create new phrase button; pressing resets all words to available words,
   timeline to the end
 

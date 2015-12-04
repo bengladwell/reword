@@ -29,7 +29,7 @@ class WordDropZone extends Component {
 }
 
 WordDropZone.contextTypes = {
-  store: React.PropTypes.object
+  store: PropTypes.object
 };
 
 WordDropZone.propTypes = {

@@ -11,7 +11,7 @@ import { addWord } from '../actions';
 
 import styles from '../../css/components/settings.css';
 
-const fireWords = new Firebase('https://reword.firebaseio.com').child('words');
+const firebase = new Firebase('https://reword.firebaseio.com').child('words');
 
 class Settings extends Component {
 
@@ -23,7 +23,7 @@ class Settings extends Component {
           // remove empty strings
           return word;
         }).forEach((word) => {
-          store.dispatch(addWord(fireWords.push({text: word}).key(), word));
+          store.dispatch(addWord(firebase.push({text: word}).key(), word));
         });
         this.refs.newwords.clearValue();
       };

@@ -6,14 +6,15 @@ import { routerStateReducer, reduxReactRouter } from 'redux-router';
 import createHistory from 'history/lib/createBrowserHistory';
 import Firebase from 'firebase';
 
-import { words, user as userReducer } from './reducers';
+import { words, user as userReducer, phrases } from './reducers';
 import Root from './components/Root';
 import { addWords, addUser } from './actions';
 
 const reducer = combineReducers({
   router: routerStateReducer,
   words,
-  user: userReducer
+  user: userReducer,
+  phrases
 });
 
 const store = reduxReactRouter({ createHistory })(createStore)(reducer);
@@ -23,6 +24,7 @@ const firebase = new Firebase('https://reword.firebaseio.com');
 firebase.onAuth((authData) => {
   if (authData) {
     const user = {
+      id: authData.uid,
       provider: authData.provider,
       name: authData.github.displayName,
       image: authData.github.profileImageURL

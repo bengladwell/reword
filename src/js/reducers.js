@@ -1,4 +1,4 @@
-import { MOVE_WORD, ADD_WORD, ADD_WORDS, ADD_USER, Spaces } from './actions';
+import { MOVE_WORD, ADD_WORD, ADD_WORDS, ADD_USER, ADD_PHRASE, Spaces } from './actions';
 import update from 'react-addons-update';
 
 /* state: {
@@ -18,6 +18,20 @@ export function user(state = null, action) {
 
   case ADD_USER:
     return action.user;
+
+  default:
+    return state;
+  }
+}
+
+export function phrases(state = [], action) {
+  switch (action.type) {
+
+  case ADD_PHRASE:
+    return state.concat({
+      user: action.user,
+      words: action.words
+    });
 
   default:
     return state;
