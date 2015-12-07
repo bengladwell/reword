@@ -7,11 +7,11 @@ import Firebase from 'firebase';
 
 import { Spaces as SpaceEnums, addPhrase } from '../actions';
 
-import styles from '../../css/components/spaces.css';
+import styles from '../../css/components/create-phrase.css';
 import DraggableWord from './DraggableWord';
 import WordDropZone from './WordDropZone';
 
-class Spaces extends Component {
+class CreatePhrase extends Component {
   render() {
     const { available, phrase } = this.props,
       { store } = this.context,
@@ -56,11 +56,11 @@ class Spaces extends Component {
 
 }
 
-Spaces.contextTypes = {
+CreatePhrase.contextTypes = {
   store: PropTypes.object
 };
 
-Spaces.propTypes = {
+CreatePhrase.propTypes = {
   available: PropTypes.arrayOf(PropTypes.shape({
     id: PropTypes.string.isRequired,
     text: PropTypes.string.isRequired
@@ -84,4 +84,4 @@ function select(state) {
   };
 }
 
-export default connect(select)(ddContext(HTML5Backend)(Spaces));
+export default connect(select)(ddContext(HTML5Backend)(CreatePhrase));

@@ -4,7 +4,7 @@ import { ReduxRouter } from 'redux-router';
 import { IndexRoute, Route } from 'react-router';
 
 import App from './App';
-import Spaces from './Spaces';
+import CreatePhrase from './CreatePhrase';
 import Settings from './Settings';
 
 export default class Root extends Component {
@@ -13,7 +13,7 @@ export default class Root extends Component {
       <Provider store={this.props.store}>
         <ReduxRouter>
           <Route path="/" component={App}>
-            <IndexRoute component={Spaces} />
+            <IndexRoute component={CreatePhrase} />
             <Route path="settings" component={Settings} />
           </Route>
         </ReduxRouter>

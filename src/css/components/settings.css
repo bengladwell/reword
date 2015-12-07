@@ -7,7 +7,7 @@
   padding-top: 20px;
 }
 .wordGroup {
-  composes: wordGroup from "./spaces.css";
+  composes: wordGroup from "./create-phrase.css";
   margin: 0 auto;
   width: 85%;
   padding-top: 20px;
