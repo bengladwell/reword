@@ -1,4 +1,5 @@
 import React, { Component, PropTypes } from 'react';
+import { Link } from 'react-router';
 import { connect } from 'react-redux';
 import { DragDropContext as ddContext } from 'react-dnd';
 import HTML5Backend from 'react-dnd-html5-backend';
@@ -13,9 +14,8 @@ import WordDropZone from './WordDropZone';
 
 class CreatePhrase extends Component {
   render() {
-    const { available, phrase } = this.props,
+    const { available, phrase, authuser } = this.props,
       { store } = this.context,
-      user = store.getState().user,
       firebase = new Firebase('https://reword.firebaseio.com');
 
 
@@ -39,17 +39,20 @@ class CreatePhrase extends Component {
           })}
           <WordDropZone index={phrase.length} space={SpaceEnums.PHRASE} isLast={true} />
         </div>
-        {user ? <FlatButton label="Save" backgroundColor="#FFF" secondary={true} onClick={() => {
+        <FlatButton label="Save" backgroundColor="#FFF" secondary={true} onClick={() => {
           if (phrase.length) {
-            let action = store.dispatch(addPhrase(user.id, phrase.map((word) => {
+            let action = store.dispatch(addPhrase(authuser.id, phrase.map((word) => {
               return word.id;
             })));
             firebase.child('phrases').push({
               user: action.user,
+              date: action.date,
               words: action.words
             });
+            this.props.history.push("/");
           }
-        }} /> : ''}
+        }} />
+        <Link to="/"><FlatButton label="Cancel" backgroundColor="#FFF" secondary={true} /></Link>
       </div>
     );
   }
@@ -61,14 +64,18 @@ CreatePhrase.contextTypes = {
 };
 
 CreatePhrase.propTypes = {
+
   available: PropTypes.arrayOf(PropTypes.shape({
     id: PropTypes.string.isRequired,
     text: PropTypes.string.isRequired
   }).isRequired).isRequired,
+
   phrase: PropTypes.arrayOf(PropTypes.shape({
     id: PropTypes.string.isRequired,
     text: PropTypes.string.isRequired
-  }).isRequired).isRequired
+  }).isRequired).isRequired,
+
+  authuser: PropTypes.object
 };
 
 function select(state) {
@@ -80,7 +87,8 @@ function select(state) {
   };
   return {
     available: state.words.available.map(lookupWord).filter(Boolean),
-    phrase: state.words.phrase.map(lookupWord).filter(Boolean)
+    phrase: state.words.phrase.map(lookupWord).filter(Boolean),
+    authuser: state.user
   };
 }
 

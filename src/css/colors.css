@@ -1,0 +1,13 @@
+.opacityFull {
+  opacity: 1;
+}
+.opacityMedium {
+  opacity: 0.87;
+}
+.opacityLight {
+  opacity: 0.54;
+}
+
+.gray {
+  color: #eee;
+}

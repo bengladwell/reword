@@ -47,6 +47,7 @@ export function addPhrase(userId, words) {
   return {
     type: ADD_PHRASE,
     user: userId,
+    date: Date.now(),
     words
   };
 }

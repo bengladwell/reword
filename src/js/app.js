@@ -3,10 +3,10 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { createStore, combineReducers } from 'redux';
 import { routerStateReducer, reduxReactRouter } from 'redux-router';
-import createHistory from 'history/lib/createBrowserHistory';
+import { createHistory } from 'history';
 import Firebase from 'firebase';
 
-import { words, user as userReducer, phrases } from './reducers';
+import { words, user as userReducer, phrases, activePhrase, people } from './reducers';
 import Root from './components/Root';
 import { addWords, addUser } from './actions';
 
@@ -14,7 +14,9 @@ const reducer = combineReducers({
   router: routerStateReducer,
   words,
   user: userReducer,
-  phrases
+  phrases,
+  activePhrase,
+  people
 });
 
 const store = reduxReactRouter({ createHistory })(createStore)(reducer);
@@ -32,6 +34,15 @@ firebase.onAuth((authData) => {
     store.dispatch(addUser(user));
     firebase.child('users').child(authData.uid).set(user);
   }
+});
+
+firebase.child('phrases').once('value', (data) => {
+  store.dispatch({
+    type: 'ADD_PHRASES',
+    phrases: _map(data.val(), (p) => {
+      return p;
+    })
+  });
 });
 
 firebase.child('words').once('value', (data) => {

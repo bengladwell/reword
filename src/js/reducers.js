@@ -6,7 +6,9 @@ import update from 'react-addons-update';
  *    index: [{ id: backend_id, text: word }, ...],
  *    available: [<id>, ...],
  *    phrase: [<id>, ...]
- *  }
+ *  },
+ *  phrases: [{ user: ..., words: [...]}, ... ],
+ *  activePhrase: <n>,
  *  settings: { ... },
  *  router: <from react-router/redux-router>,
  *  user: { ... }
@@ -24,14 +26,54 @@ export function user(state = null, action) {
   }
 }
 
+export function people(state = {}, action) {
+  switch (action.type) {
+
+  case 'ADD_PERSON':
+    return Object.assign({}, state, {
+      [action.id]: {
+        name: action.name,
+        image: action.image
+      }
+    });
+
+  default:
+    return state;
+  }
+}
+
 export function phrases(state = [], action) {
   switch (action.type) {
 
   case ADD_PHRASE:
     return state.concat({
       user: action.user,
+      date: action.date,
       words: action.words
     });
+
+  case 'ADD_PHRASES':
+    return state.concat(action.phrases.map((phrase) => {
+      return {
+        user: phrase.user,
+        date: phrase.date,
+        words: phrase.words
+      };
+    }));
+
+  default:
+    return state;
+  }
+}
+
+export function activePhrase(state = 0, action) {
+  switch (action.type) {
+
+  case 'INC_ACTIVE_PHRASE':
+    return state + 1;
+
+  case 'CHANGE_PHRASE':
+    return action.index;
 
   default:
     return state;

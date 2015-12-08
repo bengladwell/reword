@@ -1,0 +1,31 @@
+.root {
+  composes: main from "./app.css";
+}
+.wordGroup {
+  composes: clearfix from "../common.css";
+}
+.phrase {
+  composes: wordGroup;
+  min-height: 50px;
+  border-radius: 4px;
+  border: 2px dashed #EEE;
+  margin: 20px 0;
+}
+.person {
+  margin-top: 10px;
+  text-align: center;
+  composes: appFont from "../typography.css";
+}
+.createdBy {
+  composes: body1 from "../typography.css";
+  color: #969696;
+  text-transform: lowercase;
+  margin-right: 4px;
+}
+.slider {
+  composes: appFont from "../typography.css";
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 1;
+  margin-top: 60px;
+}
