@@ -6,11 +6,10 @@ import HTML5Backend from 'react-dnd-html5-backend';
 import FlatButton from 'material-ui/lib/flat-button';
 import Firebase from 'firebase';
 
-import { Spaces as SpaceEnums, addPhrase } from '../actions';
-
-import styles from '../../css/components/create-phrase.css';
 import DraggableWord from './DraggableWord';
 import WordDropZone from './WordDropZone';
+
+import styles from '../../css/components/create-phrase.css';
 
 class CreatePhrase extends Component {
   render() {
@@ -21,29 +20,39 @@ class CreatePhrase extends Component {
 
     return (
       <div className={styles.root}>
+
         <div ref="available" className={styles.wordGroup}>
           {available.map(function (word, i) {
             return <div key={word.id}>
-              <WordDropZone index={i} space={SpaceEnums.AVAILABLE} />
+              <WordDropZone index={i} space="AVAILABLE" />
               <DraggableWord id={word.id} index={i} text={word.text} />
             </div>;
           })}
-          <WordDropZone index={available.length} space={SpaceEnums.AVAILABLE} isLast={true} />
+          <WordDropZone index={available.length} space="AVAILABLE" isLast={true} />
         </div>
+
         <div ref="phrase" className={styles.phrase}>
           {phrase.map(function (word, i) {
             return <div key={word.id}>
-              <WordDropZone index={i} space={SpaceEnums.PHRASE} />
+              <WordDropZone index={i} space="PHRASE" />
               <DraggableWord id={word.id} index={i} text={word.text} />
             </div>;
           })}
-          <WordDropZone index={phrase.length} space={SpaceEnums.PHRASE} isLast={true} />
+          <WordDropZone index={phrase.length} space="PHRASE" isLast={true} />
         </div>
+
         <FlatButton label="Save" backgroundColor="#FFF" secondary={true} onClick={() => {
+
           if (phrase.length) {
-            let action = store.dispatch(addPhrase(authuser.id, phrase.map((word) => {
-              return word.id;
-            })));
+            let action = store.dispatch({
+              type: 'ADD_PHRASE',
+              user: authuser.id,
+              date: Date.now(),
+              words: phrase.map((word) => {
+                return word.id;
+              })
+            });
+
             firebase.child('phrases').push({
               user: action.user,
               date: action.date,
@@ -51,8 +60,11 @@ class CreatePhrase extends Component {
             });
             this.props.history.push("/");
           }
+
         }} />
+
         <Link to="/"><FlatButton label="Cancel" backgroundColor="#FFF" secondary={true} /></Link>
+
       </div>
     );
   }

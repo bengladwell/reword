@@ -8,7 +8,6 @@ import Firebase from 'firebase';
 
 import { words, user as userReducer, phrases, activePhrase, people } from './reducers';
 import Root from './components/Root';
-import { addWords, addUser } from './actions';
 
 const reducer = combineReducers({
   router: routerStateReducer,
@@ -31,7 +30,10 @@ firebase.onAuth((authData) => {
       name: authData.github.displayName,
       image: authData.github.profileImageURL
     };
-    store.dispatch(addUser(user));
+    store.dispatch({
+      type: 'ADD_USER',
+      user: user
+    });
     firebase.child('users').child(authData.uid).set(user);
   }
 });
@@ -47,12 +49,15 @@ firebase.child('phrases').once('value', (data) => {
 
 firebase.child('words').once('value', (data) => {
   let fwords = data.val();
-  store.dispatch(addWords(_map(fwords, (w, id) => {
-    return {
-      id: id,
-      text: w.text
-    };
-  })));
+  store.dispatch({
+    type: 'ADD_WORDS',
+    words: _map(fwords, (w, id) => {
+      return {
+        id: id,
+        text: w.text
+      };
+    })
+  });
 });
 
 document.addEventListener('DOMContentLoaded', () => {

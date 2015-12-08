@@ -1,4 +1,3 @@
-import { MOVE_WORD, ADD_WORD, ADD_WORDS, ADD_USER, ADD_PHRASE, Spaces } from './actions';
 import update from 'react-addons-update';
 
 /* state: {
@@ -18,7 +17,7 @@ import update from 'react-addons-update';
 export function user(state = null, action) {
   switch (action.type) {
 
-  case ADD_USER:
+  case 'ADD_USER':
     return action.user;
 
   default:
@@ -45,7 +44,7 @@ export function people(state = {}, action) {
 export function phrases(state = [], action) {
   switch (action.type) {
 
-  case ADD_PHRASE:
+  case 'ADD_PHRASE':
     return state.concat({
       user: action.user,
       date: action.date,
@@ -83,7 +82,7 @@ export function activePhrase(state = 0, action) {
 export function words(state = {index: [], available: [], phrase: []}, action) {
   switch (action.type) {
 
-  case ADD_WORD:
+  case 'ADD_WORD':
     return Object.assign({}, state, {
       //index: Object.assign({}, state.index, {[action.id]: action.text}),
       index: state.index.concat({
@@ -93,7 +92,7 @@ export function words(state = {index: [], available: [], phrase: []}, action) {
       available: state.available.concat(action.id)
     });
 
-  case ADD_WORDS:
+  case 'ADD_WORDS':
     return Object.assign({}, state, {
       index: state.index.concat(action.words.map((word) => {
         return {
@@ -106,15 +105,15 @@ export function words(state = {index: [], available: [], phrase: []}, action) {
       }))
     });
 
-  case MOVE_WORD:
-    if (action.space === Spaces.AVAILABLE && state.available[action.index] === action.word ||
-        action.space === Spaces.PHRASE && state.phrase[action.index] === action.word) {
+  case 'MOVE_WORD':
+    if (action.space === 'AVAILABLE' && state.available[action.index] === action.word ||
+        action.space === 'PHRASE' && state.phrase[action.index] === action.word) {
       return state;
     }
 
     // could improve performance by not filtering both spaces if word is found in first one
 
-    if (action.space === Spaces.AVAILABLE) {
+    if (action.space === 'AVAILABLE') {
       return Object.assign({}, state, {
         available: update(state.available.filter(function (id) {
           return id !== action.word;
@@ -125,7 +124,7 @@ export function words(state = {index: [], available: [], phrase: []}, action) {
       });
     }
 
-    if (action.space === Spaces.PHRASE) {
+    if (action.space === 'PHRASE') {
       return Object.assign({}, state, {
         available: state.available.filter(function (id) {
           return id !== action.word;

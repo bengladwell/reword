@@ -7,23 +7,25 @@ import IconButton from 'material-ui/lib/icon-button';
 import Firebase from 'firebase';
 
 import Word from './Word';
-import { addWord } from '../actions';
 
 import styles from '../../css/components/settings.css';
-
-const firebase = new Firebase('https://reword.firebaseio.com').child('words');
 
 class Settings extends Component {
 
   render() {
     const { available } = this.props,
+      firebase = new Firebase('https://reword.firebaseio.com').child('words'),
       { store } = this.context,
       addWords = () => {
         this.refs.newwords.getValue().split('\n').filter((word) => {
           // remove empty strings
           return word;
         }).forEach((word) => {
-          store.dispatch(addWord(firebase.push({text: word}).key(), word));
+          store.dispatch({
+            type: 'ADD_WORD',
+            id: firebase.push({text: word}).key(),
+            text: word
+          });
         });
         this.refs.newwords.clearValue();
       };
