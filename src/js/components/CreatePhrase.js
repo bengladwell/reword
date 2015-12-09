@@ -22,7 +22,9 @@ class CreatePhrase extends Component {
       <div className={styles.root}>
 
         <div ref="available" className={styles.wordGroup}>
-          {available.map(function (word, i) {
+          {available.slice(0).sort((a, b) => {
+            return a.text > b.text ? 1 : (a.text < b.text ? -1 : 0);
+          }).map(function (word, i) {
             return <div key={word.id}>
               <WordDropZone index={i} space="AVAILABLE" />
               <DraggableWord id={word.id} index={i} text={word.text} />

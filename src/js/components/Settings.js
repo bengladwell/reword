@@ -13,22 +13,7 @@ import styles from '../../css/components/settings.css';
 class Settings extends Component {
 
   render() {
-    const { available } = this.props,
-      firebase = new Firebase('https://reword.firebaseio.com').child('words'),
-      { store } = this.context,
-      addWords = () => {
-        this.refs.newwords.getValue().split('\n').filter((word) => {
-          // remove empty strings
-          return word;
-        }).forEach((word) => {
-          store.dispatch({
-            type: 'ADD_WORD',
-            id: firebase.push({text: word}).key(),
-            text: word
-          });
-        });
-        this.refs.newwords.clearValue();
-      };
+    const { available } = this.props;
 
     return (
       <div className={styles.root}>
@@ -36,19 +21,41 @@ class Settings extends Component {
           <Tab label="Add words">
             <div className={styles.heading}>Available words</div>
             <div ref="available" className={styles.wordGroup}>
-              {available.map(function (word) {
+              {available.slice(0).sort((a, b) => {
+                return a.text > b.text ? 1 : (a.text < b.text ? -1 : 0);
+              }).map(function (word) {
                 return <Word key={word.id} text={word.text} />;
               })}
             </div>
             <div className={styles.addWords}>
               <TextField floatingLabelText="Add words separated by newlines" multiLine={true} ref="newwords" />
-              <IconButton iconClassName="material-icons" tooltip="Save" style={{display: "block"}} onClick={addWords}>done</IconButton>
+              <IconButton iconClassName="material-icons" tooltip="Save" style={{display: "block"}} onClick={() => {
+                this.addWords();
+              }}>done</IconButton>
             </div>
           </Tab>
           <Tab label="Your phrases"></Tab>
         </Tabs>
       </div>
     );
+  }
+
+  addWords() {
+    const firebase = new Firebase('https://reword.firebaseio.com').child('words'),
+      { store } = this.context;
+
+    this.refs.newwords.getValue().split('\n').filter((word) => {
+      // remove empty strings
+      return word;
+    }).forEach((word) => {
+      store.dispatch({
+        type: 'ADD_WORD',
+        id: firebase.push({text: word}).key(),
+        text: word
+      });
+    });
+    this.refs.newwords.clearValue();
+    this.props.history.push("/");
   }
 }
 

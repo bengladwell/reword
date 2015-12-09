@@ -28,34 +28,37 @@ class App extends Component {
   render() {
     const theme = ThemeManager.getMuiTheme(Theme),
       { user } = this.props,
+      settingsLink = this.props.location.pathname === "/settings" ?
+          <Link to="/"><FontIcon className="material-icons" color={Colors.white}>arrow_back</FontIcon></Link>
+        : <Link to="/settings"><FontIcon className="material-icons" color={Colors.white}>settings</FontIcon></Link>,
       elementRight = (
         <div>
-          {this.props.location.pathname === "/settings" ?
-              <Link to="/"><FontIcon className="material-icons" color={Colors.white}>arrow_back</FontIcon></Link>
-            : <Link to="/settings"><FontIcon className="material-icons" color={Colors.white}>settings</FontIcon></Link>}
-          <ToolbarSeparator style={{top: '6px', marginLeft: '4px'}}/>
-          {user ?
+          { user ?
+              <span>{settingsLink}<ToolbarSeparator style={{top: '6px', marginLeft: '4px'}}/></span>
+            : '' }
+
+          { user ?
               <span className={styles.label}>
                 <Avatar src={user.image} style={{verticalAlign: "middle", marginRight: '4px'}}/>
                 {user.name}
               </span>
+
             : <span className={styles.label}>Login
               <IconButton
                 tooltip="Login with GitHub"
                 tooltipPosition="bottom-left"
                 style={{padding: '0px 8px', width: 'inherit'}}
                 onClick={() => {
-                  firebase.authWithOAuthRedirect("github", (err, authData) => {
+                  firebase.authWithOAuthRedirect("github", (err) => {
                     if (err) {
                       firebase.unauth();
                     }
-                    console.log(authData);
                   });
                 }}
               >
                 <FontIcon className="icomoon-github" color={Colors.white} />
               </IconButton>
-              </span>}
+              </span> }
         </div>
       );
 

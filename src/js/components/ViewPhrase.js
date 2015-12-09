@@ -35,7 +35,9 @@ class ViewPhrase extends Component {
     return (
       <div className={styles.root}>
         <div ref="available" className={styles.wordGroup}>
-          {available.map(function (word) {
+          {available.slice(0).sort((a, b) => {
+            return a.text > b.text ? 1 : (a.text < b.text ? -1 : 0);
+          }).map(function (word) {
             return <Word key={word.id} text={word.text} />;
           })}
         </div>

@@ -12,7 +12,7 @@
   margin: 20px 0;
 }
 .person {
-  margin-top: 10px;
+  margin-top: 20px;
   text-align: center;
   composes: appFont from "../typography.css";
 }
