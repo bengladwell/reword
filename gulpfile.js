@@ -18,7 +18,7 @@ var _ = require('underscore'),
   nodemon = require('nodemon');
 
 gulp.task('lint', function () {
-  return gulp.src('src/js/**/*.js')
+  return gulp.src(['src/js/**/*.js', '!src/js/server/index.js'])
     .pipe(eslint({
       rules: process.env.NODE_ENV === 'development' ? {
         "no-console": 0,
