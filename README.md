@@ -22,6 +22,11 @@ Check out the last version at http://reword.divshot.io.
 ### Where are the tests!?
 I do believe in testing. :) I don't usually write tests when I am doing exploratory coding though. Now that basic functionality is working, tests are the next thing on the list.
 
+### Where are the action creators and action constants?
+I started building this project using the action creator and action constant conventions advocated in the Redux docs. I evenually found that the additional indirection wasn't helpful to me, so I removed them in favor of passing object literals. [Apparently](http://rackt.org/redux/docs/basics/Actions.html#note-on-boilerplate), this is an ok thing to do.
+
+## Build instructions
+
 To build:  
 `gulp`
 
