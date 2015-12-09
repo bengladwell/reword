@@ -1,7 +1,7 @@
 # Reword
 ## An experiment with React, Redux, and more
 
-This project is an effort to learn React, as well some emerging React libraries. These include:
+This project is an effort to learn React and some emerging JS libraries. These include:
 * [Redux](https://github.com/rackt/redux)
 * [React Router](https://github.com/rackt/react-router)
 * [React DnD](https://github.com/gaearon/react-dnd) for drag and drop
@@ -15,10 +15,14 @@ In addition, the app uses
 * [ESLint](http://eslint.org/)
 * ES2015
 
-With the exception of Browserify, gulp, ESLint, and ES2015, all of these technologies are new to me. I'm probably doing plenty of stuff wrong, so feedback is welcomed!
+With the exception of Browserify, gulp, ESLint, and ES2015, all of these technologies are new to me. I'm probably doing lots of stuff wrong, so feedback is welcomed!
+
+## What is it?
+It's a web app that mimics a classic refrigerator magnets game. If you log in, you can create phrases by dragging words around. Phrases are displayed along with their author on the main page. Eventually, I want to animate the word transitions so that they words fly around each time you see a new phrase.
 
 Check out the last version at http://reword.divshot.io.
 
+## Infrequently Asked Questions
 ### Where are the tests!?
 I do believe in testing. :) I don't usually write tests when I am doing exploratory coding though. Now that basic functionality is working, tests are the next thing on the list.
 
