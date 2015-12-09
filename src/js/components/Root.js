@@ -8,6 +8,8 @@ import CreatePhrase from './CreatePhrase';
 import ViewPhrase from './ViewPhrase';
 import Settings from './Settings';
 
+// this component just sets up the routing rules
+
 export default class Root extends Component {
   render() {
     return (

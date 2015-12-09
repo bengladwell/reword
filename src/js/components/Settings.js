@@ -17,9 +17,13 @@ class Settings extends Component {
 
     return (
       <div className={styles.root}>
+
         <Tabs>
+
           <Tab label="Add words">
+
             <div className={styles.heading}>Available words</div>
+
             <div ref="available" className={styles.wordGroup}>
               {available.slice(0).sort((a, b) => {
                 return a.text > b.text ? 1 : (a.text < b.text ? -1 : 0);
@@ -27,15 +31,20 @@ class Settings extends Component {
                 return <Word key={word.id} text={word.text} />;
               })}
             </div>
+
             <div className={styles.addWords}>
               <TextField floatingLabelText="Add words separated by newlines" multiLine={true} ref="newwords" />
               <IconButton iconClassName="material-icons" tooltip="Save" style={{display: "block"}} onClick={() => {
                 this.addWords();
               }}>done</IconButton>
             </div>
+
           </Tab>
+
           <Tab label="Your phrases"></Tab>
+
         </Tabs>
+
       </div>
     );
   }
@@ -44,6 +53,8 @@ class Settings extends Component {
     const firebase = new Firebase('https://reword.firebaseio.com').child('words'),
       { store } = this.context;
 
+    // push words to the store one by one because we need the firebase ID that is created
+    // as a result of firebase.push
     this.refs.newwords.getValue().split('\n').filter((word) => {
       // remove empty strings
       return word;
@@ -54,7 +65,11 @@ class Settings extends Component {
         text: word
       });
     });
+
+    // clear TextField
     this.refs.newwords.clearValue();
+
+    // redirect to view phrases page
     this.props.history.push("/");
   }
 }

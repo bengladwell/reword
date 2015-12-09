@@ -15,9 +15,25 @@ class ViewPhrase extends Component {
 
   componentDidUpdate(prevProps) {
     const person = this.context.store.getState().people[prevProps.personId];
+    // if we have not yet fetched and stored user info for the creator of this phrase, do it now
     if (!person) {
       this.getPerson(prevProps.personId);
     }
+  }
+
+  getPerson(id) {
+    // fetch user info for the user id and store it
+    new Firebase('https://reword.firebaseio.com').child('users/' + id).once('value', (data) => {
+      const personData = data.val();
+      if (personData) {
+        this.context.store.dispatch({
+          type: 'ADD_PERSON',
+          id: id,
+          name: personData.name,
+          image: personData.image
+        });
+      }
+    });
   }
 
   render() {
@@ -34,6 +50,7 @@ class ViewPhrase extends Component {
 
     return (
       <div className={styles.root}>
+
         <div ref="available" className={styles.wordGroup}>
           {available.slice(0).sort((a, b) => {
             return a.text > b.text ? 1 : (a.text < b.text ? -1 : 0);
@@ -41,7 +58,10 @@ class ViewPhrase extends Component {
             return <Word key={word.id} text={word.text} />;
           })}
         </div>
+
         {
+          // if we have user data for this person, display it; otherwise, show a progress indicator;
+          // user data will be fetched and stored if it is missing, triggering a rerender
           person ?
               <div className={styles.person}>
                 <span className={styles.createdBy}>Phrase by</span>
@@ -50,11 +70,13 @@ class ViewPhrase extends Component {
               </div>
             : <CircularProgress mode="indeterminate" size={0.5}/>
         }
+
         <div ref="phrase" className={styles.phrase}>
           {phrase.map(function (word) {
             return <Word key={word.id} text={word.text} />;
           })}
         </div>
+
         {
           phraseCount ?
             <Slider
@@ -73,23 +95,10 @@ class ViewPhrase extends Component {
             />
           : null
         }
+
         {authuser ? <Link to="/create"><FlatButton label="Create New Phrase" backgroundColor="#FFF" secondary={true} /></Link> : ''}
       </div>
     );
-  }
-
-  getPerson(id) {
-    new Firebase('https://reword.firebaseio.com').child('users/' + id).once('value', (data) => {
-      const personData = data.val();
-      if (personData) {
-        this.context.store.dispatch({
-          type: 'ADD_PERSON',
-          id: id,
-          name: personData.name,
-          image: personData.image
-        });
-      }
-    });
   }
 
 }

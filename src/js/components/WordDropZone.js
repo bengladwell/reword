@@ -22,7 +22,6 @@ function collect(connect, monitor) {
 }
 
 class WordDropZone extends Component {
-  // TODO - style:width should be gathered from source
   render() {
     const { connectDropTarget, isOver, isLast } = this.props;
     return connectDropTarget(

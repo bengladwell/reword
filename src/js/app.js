@@ -22,6 +22,7 @@ const store = reduxReactRouter({ createHistory })(createStore)(reducer);
 
 const firebase = new Firebase('https://reword.firebaseio.com');
 
+// try to get the logged in user from firebase, add to store
 firebase.onAuth((authData) => {
   if (authData) {
     const user = {
@@ -38,6 +39,7 @@ firebase.onAuth((authData) => {
   }
 });
 
+// load phrases from firebase
 firebase.child('phrases').once('value', (data) => {
   store.dispatch({
     type: 'ADD_PHRASES',
@@ -47,6 +49,7 @@ firebase.child('phrases').once('value', (data) => {
   });
 });
 
+// load words from firebase
 firebase.child('words').once('value', (data) => {
   let fwords = data.val();
   store.dispatch({

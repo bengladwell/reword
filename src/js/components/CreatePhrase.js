@@ -17,34 +17,44 @@ class CreatePhrase extends Component {
       { store } = this.context,
       firebase = new Firebase('https://reword.firebaseio.com');
 
-
     return (
       <div className={styles.root}>
 
         <div ref="available" className={styles.wordGroup}>
+
           {available.slice(0).sort((a, b) => {
             return a.text > b.text ? 1 : (a.text < b.text ? -1 : 0);
           }).map(function (word, i) {
+
             return <div key={word.id}>
               <WordDropZone index={i} space="AVAILABLE" />
               <DraggableWord id={word.id} index={i} text={word.text} />
             </div>;
+
           })}
+
           <WordDropZone index={available.length} space="AVAILABLE" isLast={true} />
+
         </div>
 
         <div ref="phrase" className={styles.phrase}>
+
           {phrase.map(function (word, i) {
+
             return <div key={word.id}>
               <WordDropZone index={i} space="PHRASE" />
               <DraggableWord id={word.id} index={i} text={word.text} />
             </div>;
+
           })}
+
           <WordDropZone index={phrase.length} space="PHRASE" isLast={true} />
+
         </div>
 
         <FlatButton label="Save" backgroundColor="#FFF" secondary={true} onClick={() => {
 
+          // push phrase to the store
           if (phrase.length) {
             let action = store.dispatch({
               type: 'ADD_PHRASE',
@@ -55,11 +65,14 @@ class CreatePhrase extends Component {
               })
             });
 
+            // push phrase to firebase
             firebase.child('phrases').push({
               user: action.user,
               date: action.date,
               words: action.words
             });
+
+            // redirect back to the view phrase page
             this.props.history.push("/");
           }
 

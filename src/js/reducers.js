@@ -1,16 +1,30 @@
 import update from 'react-addons-update';
 
 /* state: {
+ *
+ *  // words.index is the master list of words
+ *  // available and phrase are used when creating a new phrase; should probably be restructured
  *  words: {
  *    index: [{ id: backend_id, text: word }, ...],
  *    available: [<id>, ...],
  *    phrase: [<id>, ...]
  *  },
+ *
  *  phrases: [{ user: ..., words: [...]}, ... ],
+ *  // the index of the currently displayed phrase
+ *
  *  activePhrase: <n>,
+ *
  *  settings: { ... },
+ *
  *  router: <from react-router/redux-router>,
+ *
+ *  // the logged in user
  *  user: { ... }
+ *
+ *  // people is an indexed list of users who have created phrases
+ *  people: { <id>: { name, image } ... }
+ *
  * }
  */
 
@@ -84,7 +98,6 @@ export function words(state = {index: [], available: [], phrase: []}, action) {
 
   case 'ADD_WORD':
     return Object.assign({}, state, {
-      //index: Object.assign({}, state.index, {[action.id]: action.text}),
       index: state.index.concat({
         id: action.id,
         text: action.text
