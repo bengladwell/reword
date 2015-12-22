@@ -1,7 +1,7 @@
 # Reword
 ## An experiment with React, Redux, and more
 
-Demo: http://reword.divshot.io
+Demo: https://reword.firebaseapp.com/
 
 This project is an effort to learn React and some emerging JS libraries. These include:
 * [Redux](https://github.com/rackt/redux)
@@ -11,7 +11,6 @@ This project is an effort to learn React and some emerging JS libraries. These i
 
 In addition, the app uses  
 * [Firebase](https://www.firebase.com/) as a backend, including auth
-* [Divshot](https://divshot.com/) to host
 * [Material Design Spec](https://www.google.com/design/spec/material-design/introduction.html).  [Material UI](http://www.material-ui.com/#/home) components were used where applicable for convenience
 * [gulp](https://github.com/gulpjs/gulp) and [Browserify](https://github.com/substack/node-browserify) to assemble to project
 * [ESLint](http://eslint.org/)
