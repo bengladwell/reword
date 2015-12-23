@@ -39,4 +39,4 @@ Dev server:
 `gulp serve`
 
 To deploy:  
-`divshot push`
+`NODE_ENV=production gulp && firebase deploy`
