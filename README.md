@@ -21,7 +21,7 @@ With the exception of Browserify, gulp, ESLint, and ES2015, all of these technol
 ## What is it?
 It's a web app that mimics a classic refrigerator magnets game. If you log in, you can create phrases by dragging words around. Phrases are displayed along with their author on the main page. Eventually, I want to animate the word transitions so that they words fly around each time you see a new phrase.
 
-Check out the latest version at http://reword.divshot.io.
+Check out the latest version at https://reword.firebaseapp.com/
 
 ## Infrequently Asked Questions
 ### Where are the tests!?
