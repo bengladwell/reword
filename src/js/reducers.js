@@ -1,30 +1,25 @@
 import update from 'react-addons-update';
 
-/* state: {
- *
- *  // words.index is the master list of words
- *  // available and phrase are used when creating a new phrase; should probably be restructured
- *  words: {
- *    index: [{ id: backend_id, text: word }, ...],
- *    available: [<id>, ...],
- *    phrase: [<id>, ...]
- *  },
+/* state tree: {
+ *  words: [ {id: backend_id, text: word}, ... ],
  *
  *  phrases: [{ user: ..., words: [...]}, ... ],
+ *
+ *  creation: {
+ *    available: [ <id>, ... ],
+ *    phrase: [ <id>, ... ]
+ *  },
+ *
  *  // the index of the currently displayed phrase
- *
- *  activePhrase: <n>,
- *
- *  settings: { ... },
- *
- *  router: <from react-router/redux-router>,
+ *  activePhraseIndex: <n>
  *
  *  // the logged in user
- *  user: { ... }
+ *  user: { ... },
  *
  *  // people is an indexed list of users who have created phrases
- *  people: { <id>: { name, image } ... }
+ *  people: { <id>: { name, image } ... },
  *
+ *  router: <from react-router/redux-router>
  * }
  */
 
@@ -79,7 +74,7 @@ export function phrases(state = [], action) {
   }
 }
 
-export function activePhrase(state = 0, action) {
+export function activePhraseIndex(state = 0, action) {
   switch (action.type) {
 
   case 'INC_ACTIVE_PHRASE':
@@ -93,29 +88,36 @@ export function activePhrase(state = 0, action) {
   }
 }
 
-export function words(state = {index: [], available: [], phrase: []}, action) {
+export function words(state = [], action) {
   switch (action.type) {
 
   case 'ADD_WORD':
-    return Object.assign({}, state, {
-      index: state.index.concat({
-        id: action.id,
-        text: action.text
-      }),
-      available: state.available.concat(action.id)
+    return state.concat({
+      id: action.id,
+      text: action.text
     });
 
   case 'ADD_WORDS':
+    return state.concat(action.words.map((word) => {
+      return {
+        id: word.id,
+        text: word.text
+      };
+    }));
+
+  default:
+    return state;
+  }
+}
+
+export function creation(state = {available: [], phrase: []}, action) {
+  switch (action.type) {
+
+  case 'CREATION_INIT':
     return Object.assign({}, state, {
-      index: state.index.concat(action.words.map((word) => {
-        return {
-          id: word.id,
-          text: word.text
-        };
-      })),
-      available: state.available.concat(action.words.map((word) => {
+      available: action.words.map(function (word) {
         return word.id;
-      }))
+      })
     });
 
   case 'MOVE_WORD':

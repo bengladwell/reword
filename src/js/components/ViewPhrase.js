@@ -1,4 +1,5 @@
 import React, { Component, PropTypes } from 'react';
+import ReactDOM from 'react-dom';
 import { connect } from 'react-redux';
 import Slider from 'material-ui/lib/slider';
 import FlatButton from 'material-ui/lib/flat-button';
@@ -13,13 +14,84 @@ import styles from '../../css/components/view-phrase.css';
 
 class ViewPhrase extends Component {
 
+  constructor() {
+    super();
+    this.wordRefs = {};
+  }
+
   componentDidUpdate(prevProps) {
-    const person = this.context.store.getState().people[prevProps.personId];
+    const {
+        phrases,
+        people,
+        words
+      } = prevProps,
+      { activePhraseIndex } = this.props,
+      activePhrase = phrases.length ? phrases[activePhraseIndex] : { words: [] },
+      personId = activePhrase && activePhrase.user,
+      person = phrases.length ? people[personId] : null,
+      marginLeft = 5,
+      rowHeight = 30,
+      containerWidth = this.refs.words.offsetWidth,
+      // const doesn't mean that we won't mutate the value, only that the variable identifier will not reassigned
+      unusedWordRefs = words.filter((w) => {
+        return !activePhrase.words.find((wid) => {
+          return wid === w.id;
+        });
+      }).map((w) => {
+        return this.wordRefs[w.id];
+      });
+
+    // sort unused words alphabetically
+    unusedWordRefs.sort((a, b) => {
+      if (a.props.text < b.props.text) {
+        return -1;
+      }
+      if (a.props.text > b.props.text) {
+        return 1;
+      }
+      return 0;
+    });
+
+    let xCursor = 0,
+      row = 0;
+
+    unusedWordRefs.forEach((wordRef) => {
+      const wordEl = ReactDOM.findDOMNode(wordRef);
+      if (xCursor + wordEl.offsetWidth > containerWidth) {
+        xCursor = 0;
+        row += 1;
+      }
+      wordEl.style.left = xCursor + 'px';
+      wordEl.style.top = row * rowHeight + 'px';
+      xCursor = xCursor + wordEl.offsetWidth + marginLeft;
+    });
+
+    xCursor = 0;
+    row += 1;
+
+    activePhrase.words.forEach((wordId) => {
+      const wordEl = ReactDOM.findDOMNode(this.wordRefs[wordId]);
+      if (xCursor + wordEl.offsetWidth > containerWidth) {
+        xCursor = 0;
+        row += 1;
+      }
+      wordEl.style.left = xCursor + 'px';
+      wordEl.style.top = row * rowHeight + 'px';
+      xCursor = xCursor + wordEl.offsetWidth + marginLeft;
+    });
+
+    row += 1;
+
+    this.refs.words.style.minHeight = (rowHeight * row) + 'px';
+
     // if we have not yet fetched and stored user info for the creator of this phrase, do it now
     if (!person) {
-      this.getPerson(prevProps.personId);
+      this.getPerson(personId);
     }
+
   }
+
+  // TODO: handle window resize
 
   getPerson(id) {
     // fetch user info for the user id and store it
@@ -38,32 +110,37 @@ class ViewPhrase extends Component {
 
   render() {
     const {
-        available,
-        phrase,
-        phraseIndex,
-        phraseCount,
-        authuser,
-        personId
+      words,
+      phrases,
+      activePhraseIndex,
+      user,
+      people,
+      dispatch
       } = this.props,
-      { store } = this.context,
-      person = store.getState().people[personId];
+      person = phrases.length && people[phrases[activePhraseIndex].user];
 
     return (
       <div className={styles.root}>
 
-        <div ref="available" className={styles.wordGroup}>
-          {available.slice(0).sort((a, b) => {
-            return a.text > b.text ? 1 : (a.text < b.text ? -1 : 0);
-          }).map(function (word) {
-            return <Word key={word.id} text={word.text} />;
-          })}
+        <div className={styles.wordGroup} ref="words">
+          {
+            words.slice(0).sort((a, b) => {
+              return a.text > b.text ? 1 : (a.text < b.text ? -1 : 0);
+            }).map((word) => {
+              return <Word key={word.id} id={word.id} text={word.text} ref={(ref) => {
+                if (ref) {
+                  this.wordRefs[ref.props.id] = ref;
+                }
+              }} />;
+            })
+          }
         </div>
 
         {
           // if we have user data for this person, display it; otherwise, show a progress indicator;
           // user data will be fetched and stored if it is missing, triggering a rerender
           person ?
-              <div className={styles.person}>
+              <div className={styles.person} ref="person" style={{position: 'relative'}}>
                 <span className={styles.createdBy}>Phrase by</span>
                 <Avatar src={person.image} style={{verticalAlign: "middle", marginRight: '4px'}}/>
                 {person.name}
@@ -71,23 +148,17 @@ class ViewPhrase extends Component {
             : <CircularProgress mode="indeterminate" size={0.5}/>
         }
 
-        <div ref="phrase" className={styles.phrase}>
-          {phrase.map(function (word) {
-            return <Word key={word.id} text={word.text} />;
-          })}
-        </div>
-
         {
-          phraseCount ?
+          phrases.length ?
             <Slider
               className={styles.slider}
               name="phrase"
-              max={phraseCount - 1}
+              max={phrases.length - 1}
               step={1}
-              value={phraseIndex}
+              value={activePhraseIndex}
               description="Slide to see more phrases"
               onChange={(e, v) => {
-                store.dispatch({
+                dispatch({
                   type: 'CHANGE_PHRASE',
                   index: v
                 });
@@ -96,7 +167,7 @@ class ViewPhrase extends Component {
           : null
         }
 
-        {authuser ? <Link to="/create"><FlatButton label="Create New Phrase" backgroundColor="#FFF" secondary={true} /></Link> : ''}
+        {user ? <Link to="/create"><FlatButton label="Create New Phrase" backgroundColor="#FFF" secondary={true} /></Link> : ''}
       </div>
     );
   }
@@ -109,59 +180,36 @@ ViewPhrase.contextTypes = {
 
 ViewPhrase.propTypes = {
 
-  available: PropTypes.arrayOf(PropTypes.shape({
+  words: PropTypes.arrayOf(PropTypes.shape({
     id: PropTypes.string.isRequired,
     text: PropTypes.string.isRequired
   }).isRequired).isRequired,
 
-  phrase: PropTypes.arrayOf(PropTypes.shape({
-    id: PropTypes.string.isRequired,
-    text: PropTypes.string.isRequired
+  phrases: PropTypes.arrayOf(PropTypes.shape({
+    date: PropTypes.number.isRequired,
+    user: PropTypes.string.isRequired,
+    words: PropTypes.arrayOf(PropTypes.string.isRequired).isRequired
   }).isRequired).isRequired,
 
-  authuser: PropTypes.object,
+  user: PropTypes.object,
 
-  personId: PropTypes.string,
+  people: PropTypes.objectOf(PropTypes.shape({
+    image: PropTypes.string.isRequired,
+    name: PropTypes.string.isRequired
+  }).isRequired),
 
-  dateCreated: PropTypes.number,
+  activePhraseIndex: PropTypes.number.isRequired,
 
-  phraseIndex: PropTypes.number.isRequired,
-
-  phraseCount: PropTypes.number.isRequired
+  dispatch: PropTypes.func.isRequired
 
 };
 
 export default connect(state => {
-  if (!state.phrases[state.activePhrase]) {
-    return {
-      available: state.words.index,
-      phrase: [],
-      authuser: state.user,
-      personId: null,
-      dateCreated: null,
-      phraseIndex: 0,
-      phraseCount: 0
-    };
-  }
-
-  let lookupWord = function (id) {
-    let word = state.words.index.find(function (w) {
-      return w.id === id;
-    });
-    return word;
-  };
-
   return {
-    available: state.words.index.filter((w) => {
-      return !state.phrases[state.activePhrase].words.find((p) => {
-        return w.id === p;
-      });
-    }),
-    phrase: state.phrases[state.activePhrase].words.map(lookupWord).filter(Boolean),
-    authuser: state.user,
-    personId: state.phrases[state.activePhrase].user,
-    dateCreated: state.phrases[state.activePhrase].date,
-    phraseIndex: state.activePhrase,
-    phraseCount: state.phrases.length
+    words: state.words,
+    phrases: state.phrases,
+    activePhraseIndex: state.activePhraseIndex,
+    user: state.user,
+    people: state.people
   };
 })(ViewPhrase);

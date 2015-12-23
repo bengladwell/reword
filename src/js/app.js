@@ -6,15 +6,16 @@ import { routerStateReducer, reduxReactRouter } from 'redux-router';
 import { createHistory } from 'history';
 import Firebase from 'firebase';
 
-import { words, user as userReducer, phrases, activePhrase, people } from './reducers';
+import { words, creation, user as userReducer, phrases, activePhraseIndex, people } from './reducers';
 import Root from './components/Root';
 
 const reducer = combineReducers({
   router: routerStateReducer,
   words,
+  creation,
   user: userReducer,
   phrases,
-  activePhrase,
+  activePhraseIndex,
   people
 });
 
@@ -51,7 +52,7 @@ firebase.child('phrases').once('value', (data) => {
 
 // load words from firebase
 firebase.child('words').once('value', (data) => {
-  let fwords = data.val();
+  const fwords = data.val();
   store.dispatch({
     type: 'ADD_WORDS',
     words: _map(fwords, (w, id) => {

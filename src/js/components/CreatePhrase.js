@@ -12,6 +12,15 @@ import WordDropZone from './WordDropZone';
 import styles from '../../css/components/create-phrase.css';
 
 class CreatePhrase extends Component {
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.words.length && !nextProps.available.length && !nextProps.phrase.length) {
+      this.context.store.dispatch({
+        type: 'CREATION_INIT',
+        words: nextProps.words
+      });
+    }
+  }
+
   render() {
     const { available, phrase, authuser } = this.props,
       { store } = this.context,
@@ -92,6 +101,11 @@ CreatePhrase.contextTypes = {
 
 CreatePhrase.propTypes = {
 
+  words: PropTypes.arrayOf(PropTypes.shape({
+    id: PropTypes.string.isRequired,
+    text: PropTypes.string.isRequired
+  }).isRequired).isRequired,
+
   available: PropTypes.arrayOf(PropTypes.shape({
     id: PropTypes.string.isRequired,
     text: PropTypes.string.isRequired
@@ -107,14 +121,16 @@ CreatePhrase.propTypes = {
 
 function select(state) {
   let lookupWord = function (id) {
-    let word = state.words.index.find(function (w) {
+    let word = state.words.find(function (w) {
       return w.id === id;
     });
     return word;
   };
+
   return {
-    available: state.words.available.map(lookupWord).filter(Boolean),
-    phrase: state.words.phrase.map(lookupWord).filter(Boolean),
+    words: state.words,
+    available: state.creation.available.map(lookupWord).filter(Boolean),
+    phrase: state.creation.phrase.map(lookupWord).filter(Boolean),
     authuser: state.user
   };
 }

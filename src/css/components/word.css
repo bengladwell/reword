@@ -1,14 +1,14 @@
 .root {
-  composes: clearfix from "../common.css";
-  float: left;
-  margin: 0 5px 5px 0;
   padding: 0 5px;
+  position: absolute;
   cursor: default;
 }
 .draggable {
   composes: root;
+  position: static;
   cursor: move;
   margin-right: 0;
+  margin-bottom: 5px;
 }
 .text {
   composes: appFont from "../typography.css";

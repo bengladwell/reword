@@ -2,14 +2,7 @@
   composes: main from "./app.css";
 }
 .wordGroup {
-  composes: clearfix from "../common.css";
-}
-.phrase {
-  composes: wordGroup;
-  min-height: 50px;
-  border-radius: 4px;
-  border: 2px dashed #EEE;
-  margin: 20px 0;
+  position: relative;
 }
 .person {
   margin-top: 20px;
