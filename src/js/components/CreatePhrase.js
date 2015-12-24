@@ -12,12 +12,16 @@ import WordDropZone from './WordDropZone';
 import styles from '../../css/components/create-phrase.css';
 
 class CreatePhrase extends Component {
-  componentWillReceiveProps(nextProps) {
-    if (nextProps.words.length && !nextProps.creation.available.length && !nextProps.creation.phrase.length) {
-      //this.context.store.dispatch({
-      this.props.dispatch({
+  componentDidMount() {
+    const {
+        words,
+        creation,
+        dispatch
+      } = this.props;
+    if (words.length && !creation.available.length && !creation.phrase.length) {
+      dispatch({
         type: 'CREATION_INIT',
-        words: nextProps.words
+        words: words
       });
     }
   }
