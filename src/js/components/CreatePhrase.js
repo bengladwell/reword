@@ -13,11 +13,20 @@ import styles from '../../css/components/create-phrase.css';
 
 class CreatePhrase extends Component {
   componentDidMount() {
+    this.init(this.props);
+  }
+
+  componentWillReceiveProps(nextProps) {
+    this.init(nextProps);
+  }
+
+  init(props) {
     const {
         words,
         creation,
         dispatch
-      } = this.props;
+      } = props;
+    console.log(words.length, creation.available.length, creation.phrase.length);
     if (words.length && !creation.available.length && !creation.phrase.length) {
       dispatch({
         type: 'CREATION_INIT',
