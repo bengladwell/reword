@@ -1,5 +1,6 @@
 import React, { Component, PropTypes } from 'react';
 import ReactDOM from 'react-dom';
+import _debounce from 'lodash.debounce';
 import { connect } from 'react-redux';
 import Slider from 'material-ui/lib/slider';
 import FlatButton from 'material-ui/lib/flat-button';
@@ -17,18 +18,43 @@ class ViewPhrase extends Component {
   constructor() {
     super();
     this.wordRefs = {};
+    this.debouncedUpdatePositions = _debounce(this.updatePositions, 500).bind(this);
   }
 
-  componentDidUpdate(prevProps) {
+  componentDidMount() {
+    window.addEventListener('resize', this.debouncedUpdatePositions);
+  }
+
+  componentWillUnmount() {
+    window.removeEventListener('resize', this.debouncedUpdatePositions);
+  }
+
+  componentDidUpdate() {
     const {
         phrases,
         people,
-        words
-      } = prevProps,
-      { activePhraseIndex } = this.props,
+        activePhraseIndex
+      } = this.props,
       activePhrase = phrases.length ? phrases[activePhraseIndex] : { words: [] },
       personId = activePhrase && activePhrase.user,
-      person = phrases.length ? people[personId] : null,
+      person = phrases.length ? people[personId] : null;
+
+    // if we have not yet fetched and stored user info for the creator of this phrase, do it now
+    if (!person) {
+      this.getPerson(personId);
+    }
+
+    this.updatePositions();
+
+  }
+
+  updatePositions() {
+    const {
+        phrases,
+        words,
+        activePhraseIndex
+      } = this.props,
+      activePhrase = phrases.length ? phrases[activePhraseIndex] : { words: [] },
       marginLeft = 5,
       rowHeight = 30,
       containerWidth = this.refs.words.offsetWidth,
@@ -57,13 +83,15 @@ class ViewPhrase extends Component {
 
     unusedWordRefs.forEach((wordRef) => {
       const wordEl = ReactDOM.findDOMNode(wordRef);
-      if (xCursor + wordEl.offsetWidth > containerWidth) {
-        xCursor = 0;
-        row += 1;
+      if (wordEl) {
+        if (xCursor + wordEl.offsetWidth > containerWidth) {
+          xCursor = 0;
+          row += 1;
+        }
+        wordEl.style.left = xCursor + 'px';
+        wordEl.style.top = row * rowHeight + 'px';
+        xCursor = xCursor + wordEl.offsetWidth + marginLeft;
       }
-      wordEl.style.left = xCursor + 'px';
-      wordEl.style.top = row * rowHeight + 'px';
-      xCursor = xCursor + wordEl.offsetWidth + marginLeft;
     });
 
     xCursor = 0;
@@ -71,27 +99,22 @@ class ViewPhrase extends Component {
 
     activePhrase.words.forEach((wordId) => {
       const wordEl = ReactDOM.findDOMNode(this.wordRefs[wordId]);
-      if (xCursor + wordEl.offsetWidth > containerWidth) {
-        xCursor = 0;
-        row += 1;
+      if (wordEl) {
+        if (xCursor + wordEl.offsetWidth > containerWidth) {
+          xCursor = 0;
+          row += 1;
+        }
+        wordEl.style.left = xCursor + 'px';
+        wordEl.style.top = row * rowHeight + 'px';
+        xCursor = xCursor + wordEl.offsetWidth + marginLeft;
       }
-      wordEl.style.left = xCursor + 'px';
-      wordEl.style.top = row * rowHeight + 'px';
-      xCursor = xCursor + wordEl.offsetWidth + marginLeft;
     });
 
     row += 1;
 
     this.refs.words.style.minHeight = (rowHeight * row) + 'px';
 
-    // if we have not yet fetched and stored user info for the creator of this phrase, do it now
-    if (!person) {
-      this.getPerson(personId);
-    }
-
   }
-
-  // TODO: handle window resize
 
   getPerson(id) {
     // fetch user info for the user id and store it

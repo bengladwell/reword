@@ -26,7 +26,7 @@ class CreatePhrase extends Component {
         creation,
         dispatch
       } = props;
-    console.log(words.length, creation.available.length, creation.phrase.length);
+
     if (words.length && !creation.available.length && !creation.phrase.length) {
       dispatch({
         type: 'CREATION_INIT',
