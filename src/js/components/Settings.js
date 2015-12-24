@@ -13,7 +13,7 @@ import styles from '../../css/components/settings.css';
 class Settings extends Component {
 
   render() {
-    const { available } = this.props;
+    const { available, words } = this.props;
 
     return (
       <div className={styles.root}>
@@ -25,7 +25,9 @@ class Settings extends Component {
             <div className={styles.heading}>Available words</div>
 
             <div ref="available" className={styles.wordGroup}>
-              {available.slice(0).sort((a, b) => {
+              {available.map((id) => {
+                return words.find((w) => w.id === id);
+              }).sort((a, b) => {
                 return a.text > b.text ? 1 : (a.text < b.text ? -1 : 0);
               }).map(function (word) {
                 return <Word key={word.id} text={word.text} />;
@@ -79,22 +81,20 @@ Settings.contextTypes = {
 };
 
 Settings.propTypes = {
-  settings: PropTypes.any.isRequired,
-  available: PropTypes.arrayOf(PropTypes.shape({
+  settings: PropTypes.object,
+
+  words: PropTypes.arrayOf(PropTypes.shape({
     id: PropTypes.string.isRequired,
     text: PropTypes.string.isRequired
-  }).isRequired).isRequired
+  }).isRequired).isRequired,
+
+  available: PropTypes.arrayOf(PropTypes.string.isRequired).isRequired
 };
 
 export default connect(state => {
-  let lookupWord = function (id) {
-    let word = state.words.index.find(function (w) {
-      return w.id === id;
-    });
-    return word;
-  };
   return {
-    settings: state.settings || {},
-    available: state.words.available.map(lookupWord).filter(Boolean)
+    settings: state.settings,
+    words: state.words,
+    available: state.creation.available
   };
 })(Settings);
