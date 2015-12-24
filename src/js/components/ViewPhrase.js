@@ -23,6 +23,7 @@ class ViewPhrase extends Component {
 
   componentDidMount() {
     window.addEventListener('resize', this.debouncedUpdatePositions);
+    this.updatePositions();
   }
 
   componentWillUnmount() {
