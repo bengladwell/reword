@@ -13,8 +13,9 @@ import styles from '../../css/components/create-phrase.css';
 
 class CreatePhrase extends Component {
   componentWillReceiveProps(nextProps) {
-    if (nextProps.words.length && !nextProps.available.length && !nextProps.phrase.length) {
-      this.context.store.dispatch({
+    if (nextProps.words.length && !nextProps.creation.available.length && !nextProps.creation.phrase.length) {
+      //this.context.store.dispatch({
+      this.props.dispatch({
         type: 'CREATION_INIT',
         words: nextProps.words
       });
@@ -22,8 +23,8 @@ class CreatePhrase extends Component {
   }
 
   render() {
-    const { available, phrase, authuser } = this.props,
-      { store } = this.context,
+    const { words, creation, authuser, dispatch } = this.props,
+      { available, phrase } = creation,
       firebase = new Firebase('https://reword.firebaseio.com');
 
     return (
@@ -31,32 +32,39 @@ class CreatePhrase extends Component {
 
         <div ref="available" className={styles.wordGroup}>
 
-          {available.slice(0).sort((a, b) => {
-            return a.text > b.text ? 1 : (a.text < b.text ? -1 : 0);
-          }).map(function (word, i) {
+          {
+            available.map((id) => {
+              return words.find((w) => {
+                return w.id === id;
+              });
+            }).sort((a, b) => {
+              return a.text > b.text ? 1 : (a.text < b.text ? -1 : 0);
+            }).map(function (word, i) {
 
-            return <div key={word.id}>
-              <WordDropZone index={i} space="AVAILABLE" />
-              <DraggableWord id={word.id} index={i} text={word.text} />
-            </div>;
+              return <div key={word.id}>
+                <WordDropZone index={i} space="AVAILABLE" />
+                <DraggableWord id={word.id} index={i} text={word.text} />
+              </div>;
 
-          })}
-
+            })
+          }
           <WordDropZone index={available.length} space="AVAILABLE" isLast={true} />
 
         </div>
 
         <div ref="phrase" className={styles.phrase}>
 
-          {phrase.map(function (word, i) {
+          {
+            phrase.map((id, i) => {
+              const word = words.find((w) => w.id === id);
 
-            return <div key={word.id}>
-              <WordDropZone index={i} space="PHRASE" />
-              <DraggableWord id={word.id} index={i} text={word.text} />
-            </div>;
+              return <div key={word.id}>
+                <WordDropZone index={i} space="PHRASE" />
+                <DraggableWord id={word.id} index={i} text={word.text} />
+              </div>;
 
-          })}
-
+            })
+          }
           <WordDropZone index={phrase.length} space="PHRASE" isLast={true} />
 
         </div>
@@ -65,13 +73,11 @@ class CreatePhrase extends Component {
 
           // push phrase to the store
           if (phrase.length) {
-            let action = store.dispatch({
+            let action = dispatch({
               type: 'ADD_PHRASE',
               user: authuser.id,
               date: Date.now(),
-              words: phrase.map((word) => {
-                return word.id;
-              })
+              words: phrase
             });
 
             // push phrase to firebase
@@ -106,33 +112,18 @@ CreatePhrase.propTypes = {
     text: PropTypes.string.isRequired
   }).isRequired).isRequired,
 
-  available: PropTypes.arrayOf(PropTypes.shape({
-    id: PropTypes.string.isRequired,
-    text: PropTypes.string.isRequired
-  }).isRequired).isRequired,
-
-  phrase: PropTypes.arrayOf(PropTypes.shape({
-    id: PropTypes.string.isRequired,
-    text: PropTypes.string.isRequired
-  }).isRequired).isRequired,
+  creation: PropTypes.shape({
+    available: PropTypes.arrayOf(PropTypes.string.isRequired).isRequired,
+    phrase: PropTypes.arrayOf(PropTypes.string.isRequired).isRequired
+  }).isRequired,
 
   authuser: PropTypes.object
 };
 
-function select(state) {
-  let lookupWord = function (id) {
-    let word = state.words.find(function (w) {
-      return w.id === id;
-    });
-    return word;
-  };
-
+export default connect((state) => {
   return {
     words: state.words,
-    available: state.creation.available.map(lookupWord).filter(Boolean),
-    phrase: state.creation.phrase.map(lookupWord).filter(Boolean),
+    creation: state.creation,
     authuser: state.user
   };
-}
-
-export default connect(select)(ddContext(HTML5Backend)(CreatePhrase));
+})(ddContext(HTML5Backend)(CreatePhrase));
