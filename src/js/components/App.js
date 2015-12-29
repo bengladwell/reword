@@ -75,7 +75,9 @@ class App extends Component {
           iconStyleRight={{marginTop: 0, marginRight: 0, lineHeight: theme.appBar.height + 'px', fontSize: 24}}
           iconElementRight={elementRight}
         />
-        {this.props.children}
+        <div className={styles.main}>
+          {this.props.children}
+        </div>
       </div>
     );
   }

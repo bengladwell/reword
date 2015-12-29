@@ -41,7 +41,7 @@ class CreatePhrase extends Component {
       firebase = new Firebase('https://reword.firebaseio.com');
 
     return (
-      <div className={styles.root}>
+      <div>
 
         <div ref="available" className={styles.wordGroup}>
 

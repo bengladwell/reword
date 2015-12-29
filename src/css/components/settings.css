@@ -1,6 +1,3 @@
-.root {
-  composes: main from "./app.css";
-}
 .heading {
   composes: display2 from "../typography.css";
   text-align: center;

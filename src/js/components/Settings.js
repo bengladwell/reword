@@ -16,7 +16,7 @@ class Settings extends Component {
     const { available, words } = this.props;
 
     return (
-      <div className={styles.root}>
+      <div>
 
         <Tabs>
 

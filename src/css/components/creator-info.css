@@ -1,10 +1,4 @@
 .root {
-  composes: main from "./app.css";
-}
-.wordGroup {
-  position: relative;
-}
-.person {
   margin-top: 20px;
   text-align: center;
   composes: appFont from "../typography.css";
@@ -14,11 +8,4 @@
   color: #969696;
   text-transform: lowercase;
   margin-right: 4px;
-}
-.slider {
-  composes: appFont from "../typography.css";
-  font-size: 12px;
-  font-weight: 400;
-  line-height: 1;
-  margin-top: 60px;
 }
