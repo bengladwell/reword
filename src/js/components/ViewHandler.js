@@ -7,7 +7,7 @@ import AnimatedWords from './AnimatedWords';
 import CreatorInfo from './CreatorInfo';
 import PhraseChanger from './PhraseChanger';
 
-class ViewPhrase extends Component {
+class ViewHandler extends Component {
 
   render() {
     const {
@@ -34,7 +34,7 @@ class ViewPhrase extends Component {
 
 }
 
-ViewPhrase.propTypes = {
+ViewHandler.propTypes = {
 
   words: PropTypes.arrayOf(PropTypes.shape({
     id: PropTypes.string.isRequired,
@@ -68,4 +68,4 @@ export default connect(state => {
     user: state.user,
     people: state.people
   };
-})(ViewPhrase);
+})(ViewHandler);

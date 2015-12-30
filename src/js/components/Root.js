@@ -4,9 +4,9 @@ import { ReduxRouter } from 'redux-router';
 import { IndexRoute, Route } from 'react-router';
 
 import App from './App';
-import CreatePhrase from './CreatePhrase';
-import ViewPhrase from './ViewPhrase';
-import Settings from './Settings';
+import CreateHandler from './CreateHandler';
+import ViewHandler from './ViewHandler';
+import SettingsHandler from './SettingsHandler';
 
 // this component just sets up the routing rules
 
@@ -16,9 +16,9 @@ export default class Root extends Component {
       <Provider store={this.props.store}>
         <ReduxRouter>
           <Route path="/" component={App}>
-            <IndexRoute component={ViewPhrase} />
-            <Route path="create" component={CreatePhrase} />
-            <Route path="settings" component={Settings} />
+            <IndexRoute component={ViewHandler} />
+            <Route path="create" component={CreateHandler} />
+            <Route path="settings" component={SettingsHandler} />
           </Route>
         </ReduxRouter>
       </Provider>

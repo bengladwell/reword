@@ -10,7 +10,7 @@ import Word from './Word';
 
 import styles from '../../css/components/settings.css';
 
-class Settings extends Component {
+class SettingsHandler extends Component {
 
   render() {
     const { available, words } = this.props;
@@ -76,11 +76,11 @@ class Settings extends Component {
   }
 }
 
-Settings.contextTypes = {
+SettingsHandler.contextTypes = {
   store: React.PropTypes.object
 };
 
-Settings.propTypes = {
+SettingsHandler.propTypes = {
   settings: PropTypes.object,
 
   words: PropTypes.arrayOf(PropTypes.shape({
@@ -97,4 +97,4 @@ export default connect(state => {
     words: state.words,
     available: state.creation.available
   };
-})(Settings);
+})(SettingsHandler);

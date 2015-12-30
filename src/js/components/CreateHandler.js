@@ -11,7 +11,7 @@ import WordDropZone from './WordDropZone';
 
 import styles from '../../css/components/create-phrase.css';
 
-class CreatePhrase extends Component {
+class CreateHandler extends Component {
   componentDidMount() {
     this.init(this.props);
   }
@@ -114,11 +114,11 @@ class CreatePhrase extends Component {
 
 }
 
-CreatePhrase.contextTypes = {
+CreateHandler.contextTypes = {
   store: PropTypes.object
 };
 
-CreatePhrase.propTypes = {
+CreateHandler.propTypes = {
 
   words: PropTypes.arrayOf(PropTypes.shape({
     id: PropTypes.string.isRequired,
@@ -139,4 +139,4 @@ export default connect((state) => {
     creation: state.creation,
     authuser: state.user
   };
-})(ddContext(HTML5Backend)(CreatePhrase));
+})(ddContext(HTML5Backend)(CreateHandler));
