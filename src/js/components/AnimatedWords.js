@@ -104,7 +104,7 @@ export default class AnimatedWords extends Component {
           words.slice(0).sort((a, b) => {
             return a.text > b.text ? 1 : (a.text < b.text ? -1 : 0);
           }).map((word) => {
-            return <Word key={word.id} id={word.id} text={word.text} ref={(ref) => {
+            return <Word key={word.id} id={word.id} text={word.text} animated={true} ref={(ref) => {
               if (ref) {
                 this.wordRefs[ref.props.id] = ref;
               }

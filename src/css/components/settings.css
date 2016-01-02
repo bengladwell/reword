@@ -3,6 +3,11 @@
   text-align: center;
   padding-top: 20px;
 }
+.word {
+  composes: clearfix from "../common.css";
+  float: left;
+  margin: 0 5px 5px 0;
+}
 .wordGroup {
   composes: wordGroup from "./create-phrase.css";
   margin: 0 auto;
