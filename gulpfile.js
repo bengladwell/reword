@@ -117,7 +117,7 @@ gulp.task('serve', ['assets', 'bundle'], function () {
 
   bundler.on('update', update);
 
-  gulp.watch('assets/**', ['public']);
+  gulp.watch('assets/**', ['assets']);
 
   livereload.listen();
   gulp.watch('build/**').on('change', _.throttle(livereload.changed, 500));
