@@ -1,7 +1,7 @@
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 
-import CreatePhrase from './CreatePhrase';
+import CreatePhrase from '../components/CreatePhrase/CreatePhrase';
 
 class CreateHandler extends Component {
   render() {

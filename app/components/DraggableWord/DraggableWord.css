@@ -1,5 +1,5 @@
 .root {
-  composes: clearfix from "../common.css";
+  composes: clearfix from "../../lib/css/common.css";
   float: left;
   padding: 0 0 5px;
   cursor: move;

@@ -2,9 +2,9 @@ import React, { Component, PropTypes } from 'react';
 import ReactDOM from 'react-dom';
 import _debounce from 'lodash.debounce';
 
-import Word from './Word';
+import Word from '../Word/Word';
 
-import styles from '../../css/components/animated-words.css';
+import styles from './AnimatedWords.css';
 
 export default class AnimatedWords extends Component {
 

@@ -1,15 +1,7 @@
 {
-  "ecmaFeatures": {
-    "modules": true,
-    "jsx": true
-  },
   "env": {
-    "browser": true,
-    "es6": true
+    "node": true
   },
-  "plugins": [
-    "react"
-  ],
   "rules": {
     "comma-dangle": 2,
     "no-cond-assign": 2,
@@ -107,8 +99,5 @@
 
     "no-bitwise": 2,
     "no-plusplus": 2,
-
-    "react/jsx-uses-react": 2,
-    "react/jsx-uses-vars": 2
   }
 }

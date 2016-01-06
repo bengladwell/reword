@@ -10,9 +10,9 @@ import ThemeManager from 'material-ui/lib/styles/theme-manager';
 import Colors from 'material-ui/lib/styles/colors';
 import Firebase from 'firebase';
 
-import Theme from '../Theme';
+import Theme from '../../lib/Theme';
 
-import styles from '../../css/components/app.css';
+import styles from './App.css';
 
 class App extends Component {
 

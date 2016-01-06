@@ -1,7 +1,7 @@
 import React, { Component, PropTypes } from 'react';
 import Slider from 'material-ui/lib/slider';
 
-import styles from '../../css/components/phrase-changer.css';
+import styles from './PhraseChanger.css';
 
 export default class PhraseChanger extends Component {
 

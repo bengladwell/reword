@@ -3,9 +3,9 @@ import { connect } from 'react-redux';
 import FlatButton from 'material-ui/lib/flat-button';
 import { Link } from 'react-router';
 
-import AnimatedWords from './AnimatedWords';
-import CreatorInfo from './CreatorInfo';
-import PhraseChanger from './PhraseChanger';
+import AnimatedWords from '../components/AnimatedWords/AnimatedWords';
+import CreatorInfo from '../components/CreatorInfo/CreatorInfo';
+import PhraseChanger from '../components/PhraseChanger/PhraseChanger';
 
 class ViewHandler extends Component {
 

@@ -1,5 +1,5 @@
 .slider {
-  composes: appFont from "../typography.css";
+  composes: appFont from "../../lib/css/typography.css";
   font-size: 12px;
   font-weight: 400;
   line-height: 1;

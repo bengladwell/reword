@@ -3,7 +3,7 @@ import CircularProgress from 'material-ui/lib/circular-progress';
 import Avatar from 'material-ui/lib/avatar';
 import Firebase from 'firebase';
 
-import styles from '../../css/components/creator-info.css';
+import styles from './CreatorInfo.css';
 
 export default class CreatorInfo extends Component {
 

@@ -5,9 +5,9 @@ import TextField from 'material-ui/lib/text-field';
 import IconButton from 'material-ui/lib/icon-button';
 import Firebase from 'firebase';
 
-import Word from './Word';
+import Word from '../Word/Word';
 
-import styles from '../../css/components/settings.css';
+import styles from './Settings.css';
 
 export default class SettingsHandler extends Component {
 

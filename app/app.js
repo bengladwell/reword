@@ -6,8 +6,8 @@ import { routerStateReducer, reduxReactRouter } from 'redux-router';
 import { createHistory } from 'history';
 import Firebase from 'firebase';
 
-import { words, creation, user as userReducer, phrases, activePhraseIndex, people } from './reducers';
-import Root from './components/Root';
+import { words, creation, user as userReducer, phrases, activePhraseIndex, people } from './lib/reducers';
+import Routes from './lib/Routes';
 
 const reducer = combineReducers({
   router: routerStateReducer,
@@ -65,5 +65,5 @@ firebase.child('words').once('value', (data) => {
 });
 
 document.addEventListener('DOMContentLoaded', () => {
-  ReactDOM.render(<Root store={store} />, document.getElementById('root'));
+  ReactDOM.render(<Routes store={store} />, document.getElementById('root'));
 });

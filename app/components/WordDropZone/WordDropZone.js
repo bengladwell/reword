@@ -1,7 +1,7 @@
 import React, { Component, PropTypes } from 'react';
 import { DropTarget as dropTarget } from 'react-dnd';
 
-import styles from '../../css/components/word-drop-zone.css';
+import styles from './WordDropZone.css';
 
 const wordTarget = {
   drop(props, monitor, dropZone) {

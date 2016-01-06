@@ -4,7 +4,7 @@ var express = require('express'),
   app = express();
 
 // serve static assets like js and css files from the public directory
-app.use(serveStatic(__dirname + '/../../../build/public', {
+app.use(serveStatic(__dirname + '/../build', {
   index: false
 }));
 
@@ -16,7 +16,7 @@ if (process.env.NODE_ENV === 'development') {
 // we only have one server-side route; always serve up the build/public/index.html
 app.get('/*', function (req, res) {
   res.sendFile('index.html', {
-    root: __dirname + '/../../../build/public'
+    root: __dirname + '/../build'
   });
 });
 

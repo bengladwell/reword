@@ -1,9 +1,9 @@
 import React, { Component, PropTypes } from 'react';
 import { DragSource as dragSource } from 'react-dnd';
 
-import Word from './Word';
+import Word from '../Word/Word';
 
-import styles from '../../css/components/draggable-word.css';
+import styles from './DraggableWord.css';
 
 const wordSource = {
   beginDrag(props) {

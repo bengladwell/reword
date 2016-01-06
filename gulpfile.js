@@ -1,4 +1,3 @@
-/*eslint-env node*/
 "use strict";
 
 var _ = require('underscore'),
@@ -12,13 +11,12 @@ var _ = require('underscore'),
   babelify = require('babelify'),
   uglify = require('gulp-uglify'),
   cssModulesify = require('css-modulesify'),
-  util = require('gulp-util'),
   merge = require('merge-stream'),
   livereload = require('gulp-livereload'),
   nodemon = require('nodemon');
 
 gulp.task('lint', function () {
-  return gulp.src(['src/js/**/*.js', '!src/js/server/index.js'])
+  return gulp.src(['**/*.js', '!server/index.js', '!build/**'])
     .pipe(eslint({
       rules: process.env.NODE_ENV === 'development' ? {
         "no-console": 0,
@@ -30,26 +28,26 @@ gulp.task('lint', function () {
     .pipe(eslint.failOnError());
 });
 
-gulp.task('public', function () {
+gulp.task('assets', function () {
   return merge(
-    gulp.src('src/public/**')
-      .pipe(gulp.dest('build/public/')),
+    gulp.src('assets/**')
+      .pipe(gulp.dest('build/')),
     gulp.src('node_modules/normalize.css/normalize.css')
-      .pipe(gulp.dest('build/public/css/'))
+      .pipe(gulp.dest('build/css/'))
   );
 });
 
 gulp.task('bundle', ['lint'], function () {
   var isDev = process.env.NODE_ENV === 'development',
     bundle = browserify({
-      entries: './src/js/app.js',
+      entries: './app/app.js',
       // sourcemaps
       debug: isDev
     });
 
   bundle.plugin(cssModulesify, {
-    rootDir: './src/css',
-    output: './build/public/css/app.css'
+    rootDir: './app',
+    output: './build/css/app.css'
   });
 
   // for NODE_ENV=development, add sourcemaps, don't minify
@@ -59,12 +57,12 @@ gulp.task('bundle', ['lint'], function () {
     .pipe(source('app.js'))
     .pipe(isDev ? util.noop() : buffer())
     .pipe(isDev ? util.noop() : uglify())
-    .pipe(gulp.dest('build/public/js/'));
+    .pipe(gulp.dest('build/js/'));
 });
 
-gulp.task('serve', ['public', 'bundle'], function () {
+gulp.task('serve', ['assets', 'bundle'], function () {
   var bundle = browserify({
-      entries: './src/js/app.js',
+      entries: './app/app.js',
       debug: true,
       cache: {},
       packageCache: {},
@@ -93,7 +91,7 @@ gulp.task('serve', ['public', 'bundle'], function () {
             if (hadErrors) {
               util.beep();
             } else {
-              util.log(util.colors.blue('src/js/app.js') + ' was bundled.');
+              util.log(util.colors.blue('app.js') + ' was bundled.');
             }
 
             // pass the files through the watchify stream even if there were errors to update internal watchify cache
@@ -101,15 +99,15 @@ gulp.task('serve', ['public', 'bundle'], function () {
               .on('error', util.log.bind(util, 'Browserify Error'))
               .pipe(source('app.js'))
               // don't distribute the new code if there were errors
-              .pipe(hadErrors ? util.noop() : gulp.dest('build/public/js/'));
+              .pipe(hadErrors ? util.noop() : gulp.dest('build/js/'));
 
           }));
       }
     };
 
   bundle.plugin(cssModulesify, {
-    rootDir: './src/css',
-    output: './build/public/css/app.css'
+    rootDir: './app',
+    output: './build/css/app.css'
   });
 
   bundler = watchify(bundle.transform(babelify));
@@ -119,13 +117,13 @@ gulp.task('serve', ['public', 'bundle'], function () {
 
   bundler.on('update', update);
 
-  gulp.watch('src/public/**', ['public']);
+  gulp.watch('assets/**', ['public']);
 
   livereload.listen();
-  gulp.watch('build/public/**').on('change', _.throttle(livereload.changed, 500));
+  gulp.watch('build/**').on('change', _.throttle(livereload.changed, 500));
 
   nodemon({
-    script: 'src/js/server/index.js',
+    script: 'server/index.js',
     stdout: false
   }).on('stdout', function (s) {
     util.log(util.colors.gray(s.toString().trim()));
@@ -136,4 +134,4 @@ gulp.task('serve', ['public', 'bundle'], function () {
 });
 
 
-gulp.task('default', ['public', 'bundle']);
+gulp.task('default', ['assets', 'bundle']);

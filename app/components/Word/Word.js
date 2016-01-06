@@ -1,7 +1,7 @@
 import React, { Component, PropTypes } from 'react';
 import Paper from 'material-ui/lib/paper';
 
-import styles from '../../css/components/word.css';
+import styles from './Word.css';
 
 export default class Word extends Component {
   render() {

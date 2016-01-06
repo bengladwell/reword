@@ -1,5 +1,5 @@
 .wordGroup {
-  composes: clearfix from "../common.css";
+  composes: clearfix from "../../lib/css/common.css";
 }
 .phrase {
   composes: wordGroup;

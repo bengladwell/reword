@@ -3,10 +3,10 @@ import { Provider } from 'react-redux';
 import { ReduxRouter } from 'redux-router';
 import { IndexRoute, Route } from 'react-router';
 
-import App from './App';
-import CreateHandler from './CreateHandler';
-import ViewHandler from './ViewHandler';
-import SettingsHandler from './SettingsHandler';
+import App from '../components/App/App';
+import CreateHandler from '../handlers/CreateHandler';
+import ViewHandler from '../handlers/ViewHandler';
+import SettingsHandler from '../handlers/SettingsHandler';
 
 // this component just sets up the routing rules
 

@@ -1,6 +1,7 @@
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
-import Settings from './Settings';
+
+import Settings from '../components/Settings/Settings';
 
 class SettingsHandler extends Component {
 

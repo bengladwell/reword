@@ -5,10 +5,10 @@ import HTML5Backend from 'react-dnd-html5-backend';
 import FlatButton from 'material-ui/lib/flat-button';
 import Firebase from 'firebase';
 
-import DraggableWord from './DraggableWord';
-import WordDropZone from './WordDropZone';
+import DraggableWord from '../DraggableWord/DraggableWord';
+import WordDropZone from '../WordDropZone/WordDropZone';
 
-import styles from '../../css/components/create-phrase.css';
+import styles from './CreatePhrase.css';
 
 class CreatePhrase extends Component {
   componentDidMount() {
