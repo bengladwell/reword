@@ -1,4 +1,4 @@
 {
   "firebase": "reword",
-  "public": "build/public"
+  "public": "build"
 }
