@@ -7,6 +7,11 @@ import styles from './CreatorInfo.css';
 
 export default class CreatorInfo extends Component {
 
+  constructor() {
+    super();
+    this.firebase = new Firebase('https://reword.firebaseio.com');
+  }
+
   componentDidUpdate() {
     const {
         phrases,
@@ -19,24 +24,21 @@ export default class CreatorInfo extends Component {
 
     // if we have not yet fetched and stored user info for the creator of this phrase, do it now
     if (!person) {
-      this.getPerson(personId);
+      this.firebase.child('users/' + personId).once('value', this.addFirebasePerson.bind(this));
     }
 
   }
 
-  getPerson(id) {
-    // fetch user info for the user id and store it
-    new Firebase('https://reword.firebaseio.com').child('users/' + id).once('value', (data) => {
-      const personData = data.val();
-      if (personData) {
-        this.props.dispatch({
-          type: 'ADD_PERSON',
-          id: id,
-          name: personData.name,
-          image: personData.image
-        });
-      }
-    });
+  addFirebasePerson(data) {
+    const personData = data.val();
+    if (personData) {
+      this.props.dispatch({
+        type: 'ADD_PERSON',
+        id: data.key(),
+        name: personData.name,
+        image: personData.image
+      });
+    }
   }
 
   render() {

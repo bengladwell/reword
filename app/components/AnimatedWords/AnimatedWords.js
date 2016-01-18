@@ -10,7 +10,12 @@ export default class AnimatedWords extends Component {
 
   constructor() {
     super();
+
+    this.wordSpacing = 5;
+    this.rowHeight = 30;
+
     this.wordRefs = {};
+
     this.debouncedUpdatePositions = _debounce(this.updatePositions, 500).bind(this);
   }
 
@@ -34,8 +39,6 @@ export default class AnimatedWords extends Component {
         activePhraseIndex
       } = this.props,
       activePhrase = phrases.length ? phrases[activePhraseIndex] : { words: [] },
-      marginLeft = 5,
-      rowHeight = 30,
       containerWidth = this.refs.words.offsetWidth,
       // const doesn't mean that we won't mutate the value, only that the variable identifier will not reassigned
       unusedWordRefs = words.filter((w) => {
@@ -68,8 +71,8 @@ export default class AnimatedWords extends Component {
           row += 1;
         }
         wordEl.style.left = xCursor + 'px';
-        wordEl.style.top = row * rowHeight + 'px';
-        xCursor = xCursor + wordEl.offsetWidth + marginLeft;
+        wordEl.style.top = row * this.rowHeight + 'px';
+        xCursor = xCursor + wordEl.offsetWidth + this.wordSpacing;
       }
     });
 
@@ -84,14 +87,14 @@ export default class AnimatedWords extends Component {
           row += 1;
         }
         wordEl.style.left = xCursor + 'px';
-        wordEl.style.top = row * rowHeight + 'px';
-        xCursor = xCursor + wordEl.offsetWidth + marginLeft;
+        wordEl.style.top = row * this.rowHeight + 'px';
+        xCursor = xCursor + wordEl.offsetWidth + this.wordSpacing;
       }
     });
 
     row += 1;
 
-    this.refs.words.style.minHeight = (rowHeight * row) + 'px';
+    this.refs.words.style.minHeight = (this.rowHeight * row) + 'px';
 
   }
 

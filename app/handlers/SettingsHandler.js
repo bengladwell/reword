@@ -6,10 +6,10 @@ import Settings from '../components/Settings/Settings';
 class SettingsHandler extends Component {
 
   render() {
-    const { settings, words, dispatch } = this.props;
+    const { settings, words, dispatch, history } = this.props;
 
     return (
-      <Settings settings={settings} words={words} dispatch={dispatch} />
+      <Settings settings={settings} words={words} dispatch={dispatch} history={history} />
     );
   }
 

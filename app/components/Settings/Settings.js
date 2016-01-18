@@ -9,7 +9,7 @@ import Word from '../Word/Word';
 
 import styles from './Settings.css';
 
-export default class SettingsHandler extends Component {
+export default class Settings extends Component {
 
   render() {
     const { words } = this.props;
@@ -68,7 +68,7 @@ export default class SettingsHandler extends Component {
   }
 }
 
-SettingsHandler.propTypes = {
+Settings.propTypes = {
   settings: PropTypes.object,
 
   words: PropTypes.arrayOf(PropTypes.shape({
@@ -76,5 +76,7 @@ SettingsHandler.propTypes = {
     text: PropTypes.string.isRequired
   }).isRequired).isRequired,
 
-  dispatch: PropTypes.func.isRequired
+  dispatch: PropTypes.func.isRequired,
+
+  history: PropTypes.object.isRequired
 };

@@ -16,19 +16,22 @@ In addition, the app uses
 * [ESLint](http://eslint.org/)
 * ES2015
 
-With the exception of Browserify, gulp, ESLint, and ES2015, all of these technologies are new to me. I'm probably doing lots of stuff wrong, so feedback is welcomed!
+With the exception of Browserify, gulp, ESLint, and ES2015, all of these technologies are new to me. I'm probably doing lots of stuff wrong, so feedback/PRs are welcomed!
 
 ## What is it?
-It's a web app that mimics a classic refrigerator magnets game. If you log in, you can create phrases by dragging words around. Phrases are displayed along with their author on the main page. Eventually, I want to animate the word transitions so that they words fly around each time you see a new phrase.
+It's a web app that mimics a classic refrigerator magnets game. If you log in, you can create phrases by dragging words around. Phrases are displayed along with their author on the main page.
 
 Check out the latest version at https://reword.firebaseapp.com/
 
 ## Infrequently Asked Questions
-### Where are the tests!?
-I do believe in testing. :) I don't usually write tests when I am doing exploratory coding though. Now that basic functionality is working, tests are the next thing on the list.
 
 ### Where are the action creators and action constants?
 I started building this project using the action creator and action constant conventions advocated in the Redux docs. I evenually found that the additional indirection wasn't helpful to me, so I removed them in favor of passing object literals. [Apparently](http://rackt.org/redux/docs/basics/Actions.html#note-on-boilerplate), this is an ok thing to do.
+
+## Tests
+`npm test`  
+
+Tests use jsdom, mocha, chai, and sinon.
 
 ## Build instructions
 

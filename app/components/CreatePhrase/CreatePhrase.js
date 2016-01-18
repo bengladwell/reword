@@ -34,10 +34,36 @@ class CreatePhrase extends Component {
     }
   }
 
-  render() {
-    const { words, creation, authuser, dispatch, history } = this.props,
-      { available, phrase } = creation,
+  submitPhrase() {
+    const { creation, authuser, history, dispatch } = this.props,
+      { phrase } = creation,
       firebase = new Firebase('https://reword.firebaseio.com');
+
+    // push phrase to the store
+    if (phrase.length) {
+      let action = dispatch({
+        type: 'ADD_PHRASE',
+        user: authuser.id,
+        date: Date.now(),
+        words: phrase
+      });
+
+      // push phrase to firebase
+      firebase.child('phrases').push({
+        user: action.user,
+        date: action.date,
+        words: action.words
+      });
+
+      // redirect back to the view phrase page
+      history.push("/");
+    }
+
+  }
+
+  render() {
+    const { words, creation } = this.props,
+      { available, phrase } = creation;
 
     return (
       <div>
@@ -81,29 +107,7 @@ class CreatePhrase extends Component {
 
         </div>
 
-        <FlatButton label="Save" backgroundColor="#FFF" secondary={true} onClick={() => {
-
-          // push phrase to the store
-          if (phrase.length) {
-            let action = dispatch({
-              type: 'ADD_PHRASE',
-              user: authuser.id,
-              date: Date.now(),
-              words: phrase
-            });
-
-            // push phrase to firebase
-            firebase.child('phrases').push({
-              user: action.user,
-              date: action.date,
-              words: action.words
-            });
-
-            // redirect back to the view phrase page
-            history.push("/");
-          }
-
-        }} />
+        <FlatButton label="Save" backgroundColor="#FFF" secondary={true} onClick={this.submitPhrase.bind(this)} />
 
         <Link to="/"><FlatButton label="Cancel" backgroundColor="#FFF" secondary={true} /></Link>
 
