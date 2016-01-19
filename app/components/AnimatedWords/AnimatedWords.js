@@ -13,6 +13,7 @@ export default class AnimatedWords extends Component {
 
     this.wordSpacing = 5;
     this.rowHeight = 30;
+    this.gapRows = 6;
 
     this.wordRefs = {};
 
@@ -77,7 +78,7 @@ export default class AnimatedWords extends Component {
     });
 
     xCursor = 0;
-    row += 1;
+    row += this.gapRows;
 
     activePhrase.words.forEach((wordId) => {
       const wordEl = ReactDOM.findDOMNode(this.wordRefs[wordId]);

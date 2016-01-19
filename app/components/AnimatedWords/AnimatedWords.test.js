@@ -54,7 +54,7 @@ describe('AnimatedWords', () => {
         wordNode = ReactDOM.findDOMNode(component.wordRefs['1']),
         topPx = wordNode.style.top;
 
-      expect(parseInt(topPx.substring(0, topPx.length - 2), 10)).to.equal(component.rowHeight);
+      expect(parseInt(topPx.substring(0, topPx.length - 2), 10)).to.equal(component.rowHeight * component.gapRows);
     });
 
     it('should not overrun its container', () => {
