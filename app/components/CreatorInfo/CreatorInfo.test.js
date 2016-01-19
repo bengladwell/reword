@@ -14,7 +14,7 @@ describe('CreatorInfo', () => {
       let component = renderIntoDocument(
         <CreatorInfo
           phrases={[{
-            date: new Date(),
+            date: Date.now(),
             user: 'test/user',
             words: ['0', '1']
           }]}
@@ -33,7 +33,7 @@ describe('CreatorInfo', () => {
 
       component.componentDidUpdate();
 
-      expect(dataSpy.calledWithExactly('value', component.addFirebasePerson)).to.equal(true);
+      expect(dataSpy.calledWithExactly('value', sinon.match.func)).to.equal(true);
     });
 
   });
@@ -45,7 +45,7 @@ describe('CreatorInfo', () => {
       let component = renderIntoDocument(
         <CreatorInfo
           phrases={[{
-            date: new Date(),
+            date: Date.now(),
             user: 'test/user',
             words: ['0', '1']
           }]}
@@ -77,7 +77,7 @@ describe('CreatorInfo', () => {
       let component = renderIntoDocument(
         <CreatorInfo
           phrases={[{
-            date: new Date(),
+            date: Date.now(),
             user: 'test/user',
             words: ['0', '1']
           }]}
