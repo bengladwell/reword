@@ -1,5 +1,3 @@
-import React from 'react';
-import {renderIntoDocument} from 'react-addons-test-utils';
 import {describe, it} from 'mocha';
 import {expect} from 'chai';
 import sinon from 'sinon';
@@ -11,20 +9,16 @@ describe('CreatorInfo', () => {
   describe('componentDidUpdate', () => {
 
     it('should fetch missing person info', () => {
-      let component = renderIntoDocument(
-        <CreatorInfo
-          phrases={[{
+      let component = new CreatorInfo({
+          phrases: [{
             date: Date.now(),
             user: 'test/user',
             words: ['0', '1']
-          }]}
-          activePhraseIndex={0}
-          people={{}}
-          dispatch={() => {
-            return true;
-          }}
-        />
-      ),
+          }],
+          activePhraseIndex: 0,
+          people: {},
+          dispatch: () => {}
+        }),
         dataSpy = sinon.spy();
 
       sinon.stub(component.firebase, 'child').returns({
@@ -33,7 +27,8 @@ describe('CreatorInfo', () => {
 
       component.componentDidUpdate();
 
-      expect(dataSpy.calledWithExactly('value', sinon.match.func)).to.equal(true);
+      expect(dataSpy.args[0][0]).to.eql('value');
+      expect(dataSpy.args[0][1]).to.be.a('function');
     });
 
   });
@@ -42,18 +37,16 @@ describe('CreatorInfo', () => {
 
     it('should dispatch ADD_PERSON with new data', () => {
 
-      let component = renderIntoDocument(
-        <CreatorInfo
-          phrases={[{
-            date: Date.now(),
-            user: 'test/user',
-            words: ['0', '1']
-          }]}
-          activePhraseIndex={0}
-          people={{}}
-          dispatch={sinon.spy()}
-        />
-      );
+      let component = new CreatorInfo({
+        phrases: [{
+          date: Date.now(),
+          user: 'test/user',
+          words: ['0', '1']
+        }],
+        activePhraseIndex: 0,
+        people: {},
+        dispatch: sinon.spy()
+      });
 
       component.addFirebasePerson({
         val: sinon.stub().returns({
@@ -63,29 +56,27 @@ describe('CreatorInfo', () => {
         key: sinon.stub().returns('key')
       });
 
-      expect(component.props.dispatch.calledWithExactly({
+      expect(component.props.dispatch.args).to.eql([[{
         type: 'ADD_PERSON',
         id: 'key',
         name: 'name',
         image: 'image'
-      })).to.equal(true);
+      }]]);
 
     });
 
     it('should not dispatch ADD_PERSON without new data', () => {
 
-      let component = renderIntoDocument(
-        <CreatorInfo
-          phrases={[{
-            date: Date.now(),
-            user: 'test/user',
-            words: ['0', '1']
-          }]}
-          activePhraseIndex={0}
-          people={{}}
-          dispatch={sinon.spy()}
-        />
-      );
+      let component = new CreatorInfo({
+        phrases: [{
+          date: Date.now(),
+          user: 'test/user',
+          words: ['0', '1']
+        }],
+        activePhraseIndex: 0,
+        people: {},
+        dispatch: sinon.spy()
+      });
 
       component.addFirebasePerson({
         val: sinon.stub()
