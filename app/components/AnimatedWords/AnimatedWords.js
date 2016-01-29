@@ -9,7 +9,7 @@ import styles from './AnimatedWords.css';
 export default class AnimatedWords extends Component {
 
   constructor() {
-    super();
+    super(...arguments);
 
     this.wordSpacing = 5;
     this.rowHeight = 30;
@@ -134,6 +134,8 @@ AnimatedWords.propTypes = {
     words: PropTypes.arrayOf(PropTypes.string.isRequired).isRequired
   }).isRequired).isRequired,
 
-  activePhraseIndex: PropTypes.number.isRequired
+  activePhraseIndex: PropTypes.number.isRequired,
+
+  dispatch: PropTypes.func.isRequired
 
 };

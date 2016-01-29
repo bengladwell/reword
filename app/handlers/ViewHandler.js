@@ -6,6 +6,7 @@ import { Link } from 'react-router';
 import AnimatedWords from '../components/AnimatedWords/AnimatedWords';
 import CreatorInfo from '../components/CreatorInfo/CreatorInfo';
 import PhraseChanger from '../components/PhraseChanger/PhraseChanger';
+import PlayStopButton from '../components/PlayStopButton/PlayStopButton';
 
 class ViewHandler extends Component {
 
@@ -16,16 +17,19 @@ class ViewHandler extends Component {
       activePhraseIndex,
       user,
       people,
+      isPlaying,
       dispatch
       } = this.props;
 
     return (
       <div>
-        <AnimatedWords words={words} phrases={phrases} activePhraseIndex={activePhraseIndex} />
+        <AnimatedWords words={words} phrases={phrases} activePhraseIndex={activePhraseIndex} dispatch={dispatch} />
 
         <CreatorInfo phrases={phrases} activePhraseIndex={activePhraseIndex} people={people} dispatch={dispatch} />
 
         <PhraseChanger phrases={phrases} activePhraseIndex={activePhraseIndex} dispatch={dispatch} />
+
+        <PlayStopButton isPlaying={isPlaying} phrases={phrases} activePhraseIndex={activePhraseIndex} dispatch={dispatch} />
 
         {user ? <Link to="/create"><FlatButton label="Create New Phrase" backgroundColor="#FFF" secondary={true} /></Link> : ''}
       </div>
@@ -56,6 +60,8 @@ ViewHandler.propTypes = {
 
   activePhraseIndex: PropTypes.number.isRequired,
 
+  isPlaying: PropTypes.bool.isRequired,
+
   dispatch: PropTypes.func.isRequired
 
 };
@@ -66,6 +72,7 @@ export default connect(state => {
     phrases: state.phrases,
     activePhraseIndex: state.activePhraseIndex,
     user: state.user,
-    people: state.people
+    people: state.people,
+    isPlaying: state.isPlaying
   };
 })(ViewHandler);

@@ -7,6 +7,7 @@ import { createHistory } from 'history';
 import Firebase from 'firebase';
 
 import { words, creation, user as userReducer, phrases, activePhraseIndex, people } from './lib/reducers';
+import { isPlaying } from './lib/reducers/isPlaying';
 import Routes from './lib/Routes';
 
 const reducer = combineReducers({
@@ -16,7 +17,8 @@ const reducer = combineReducers({
   user: userReducer,
   phrases,
   activePhraseIndex,
-  people
+  people,
+  isPlaying
 });
 
 const store = reduxReactRouter({ createHistory })(createStore)(reducer);

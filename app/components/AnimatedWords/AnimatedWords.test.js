@@ -1,3 +1,4 @@
+/*eslint no-unused-expressions:0 dot-notation:0*/
 import React from 'react';
 import {renderIntoDocument} from 'react-addons-test-utils';
 import ReactDOM from 'react-dom';
@@ -9,23 +10,41 @@ import AnimatedWords from './AnimatedWords';
 
 describe('AnimatedWords', () => {
 
-  it('should add and remove a resize listener', () => {
-    let node = document.createElement('div'),
-      addEventListenerSpy = sinon.spy(window, 'addEventListener'),
-      removeEventListenerSpy = sinon.spy(window, 'removeEventListener'),
-      component = ReactDOM.render(<AnimatedWords
-        words={[]}
-        phrases={[]}
-        activePhraseIndex={0}
-      />, node);
+  describe('componentDidMount()', () => {
 
-    expect(addEventListenerSpy.calledWith('resize', component.debouncedUpdatePositions)).to.equal(true);
+    it('should add a resize listener', () => {
+      let component = new AnimatedWords({
+          words: [],
+          phrases: [],
+          activePhraseIndex: 0,
+          isPlaying: false
+        }),
+        subject = sinon.spy(window, 'addEventListener');
+      sinon.stub(component, 'updatePositions');
+      component.componentDidMount();
 
-    ReactDOM.unmountComponentAtNode(node);
-    expect(removeEventListenerSpy.calledWith('resize', component.debouncedUpdatePositions)).to.equal(true);
+      expect(subject.calledWith('resize', component.debouncedUpdatePositions)).to.be.true;
 
-    addEventListenerSpy.restore();
-    removeEventListenerSpy.restore();
+      subject.restore();
+    });
+
+  });
+
+  describe('componentWillUnmount()', () => {
+    it('should remove a resize listener', () => {
+      let component = new AnimatedWords({
+          words: [],
+          phrases: [],
+          activePhraseIndex: 0,
+          isPlaying: false
+        }),
+        subject = sinon.spy(window, 'removeEventListener');
+      component.componentWillUnmount();
+
+      expect(subject.calledWith('resize', component.debouncedUpdatePositions)).to.be.true;
+
+      subject.restore();
+    });
   });
 
   describe('updatePositions()', () => {
@@ -49,6 +68,7 @@ describe('AnimatedWords', () => {
             words: ['1']
           }]}
           activePhraseIndex={0}
+          isPlaying={true}
         />
       ),
         wordNode = ReactDOM.findDOMNode(component.wordRefs['1']),
@@ -79,6 +99,7 @@ describe('AnimatedWords', () => {
             words: ['0']
           }]}
           activePhraseIndex={0}
+          isPlaying={true}
         />
       );
 

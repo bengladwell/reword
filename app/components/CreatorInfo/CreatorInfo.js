@@ -8,7 +8,7 @@ import styles from './CreatorInfo.css';
 export default class CreatorInfo extends Component {
 
   constructor() {
-    super();
+    super(...arguments);
     this.firebase = new Firebase('https://reword.firebaseio.com');
   }
 
