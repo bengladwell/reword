@@ -6,6 +6,7 @@ import { routerStateReducer, reduxReactRouter } from 'redux-router';
 import { createHistory } from 'history';
 import Firebase from 'firebase';
 
+import config from '../config';
 import { words, creation, user as userReducer, phrases, activePhraseIndex, people } from './lib/reducers';
 import { isPlaying } from './lib/reducers/isPlaying';
 import Routes from './lib/Routes';
@@ -23,7 +24,7 @@ const reducer = combineReducers({
 
 const store = reduxReactRouter({ createHistory })(createStore)(reducer);
 
-const firebase = new Firebase('https://reword.firebaseio.com');
+const firebase = new Firebase(`https://${config.firebaseApp}.firebaseio.com`);
 
 // try to get the logged in user from firebase, add to store
 firebase.onAuth((authData) => {

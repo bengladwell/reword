@@ -7,6 +7,7 @@ import Firebase from 'firebase';
 
 import DraggableWord from '../DraggableWord/DraggableWord';
 import WordDropZone from '../WordDropZone/WordDropZone';
+import config from '../../../config';
 
 import styles from './CreatePhrase.css';
 
@@ -37,7 +38,7 @@ class CreatePhrase extends Component {
   submitPhrase() {
     const { creation, authuser, history, dispatch } = this.props,
       { phrase } = creation,
-      firebase = new Firebase('https://reword.firebaseio.com');
+      firebase = new Firebase(`https://${config.firebaseApp}.firebaseio.com`);
 
     // push phrase to the store
     if (phrase.length) {

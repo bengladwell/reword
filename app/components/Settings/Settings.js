@@ -6,6 +6,7 @@ import IconButton from 'material-ui/lib/icon-button';
 import Firebase from 'firebase';
 
 import Word from '../Word/Word';
+import config from '../../../config';
 
 import styles from './Settings.css';
 
@@ -45,7 +46,7 @@ export default class Settings extends Component {
   }
 
   addWords() {
-    const firebase = new Firebase('https://reword.firebaseio.com').child('words');
+    const firebase = new Firebase(`https://${config.firebaseApp}.firebaseio.com`);
 
     // push words to the store one by one because we need the firebase ID that is created
     // as a result of firebase.push

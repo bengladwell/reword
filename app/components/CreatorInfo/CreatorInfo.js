@@ -3,13 +3,15 @@ import CircularProgress from 'material-ui/lib/circular-progress';
 import Avatar from 'material-ui/lib/avatar';
 import Firebase from 'firebase';
 
+import config from '../../../config';
+
 import styles from './CreatorInfo.css';
 
 export default class CreatorInfo extends Component {
 
   constructor() {
     super(...arguments);
-    this.firebase = new Firebase('https://reword.firebaseio.com');
+    this.firebase = new Firebase(`https://${config.firebaseApp}.firebaseio.com`);
   }
 
   componentDidUpdate() {

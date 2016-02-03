@@ -11,6 +11,7 @@ import Colors from 'material-ui/lib/styles/colors';
 import Firebase from 'firebase';
 
 import Theme from '../../lib/Theme';
+import config from '../../../config';
 
 import styles from './App.css';
 
@@ -27,7 +28,7 @@ class App extends Component {
 
   render() {
     const theme = ThemeManager.getMuiTheme(Theme),
-      firebase = new Firebase('https://reword.firebaseio.com'),
+      firebase = new Firebase(`https://${config.firebaseApp}.firebaseio.com`),
       { user } = this.props,
 
       // settingsLink will only be displayed for logged in users
