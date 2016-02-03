@@ -19,10 +19,10 @@ export default class PhraseChanger extends Component {
             <Slider
               className={styles.slider}
               name="phrase"
+              style={{marginTop: 0, marginBottom: 12}}
               max={phrases.length - 1}
               step={1}
               value={activePhraseIndex}
-              description="Slide to see more phrases"
               onChange={(e, v) => {
                 dispatch({
                   type: 'CHANGE_PHRASE',

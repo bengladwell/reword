@@ -21,6 +21,7 @@ class App extends Component {
   getChildContext() {
     var theme = ThemeManager.getMuiTheme(Theme);
     theme.appBar.textColor = Colors.white;
+    theme.appBar.color = '#555';
     return {
       muiTheme: theme
     };
@@ -40,7 +41,7 @@ class App extends Component {
       elementRight = (
         <div>
           { user ?
-              <span>{settingsLink}<ToolbarSeparator style={{top: '6px', marginLeft: '4px'}}/></span>
+              <span>{settingsLink}<ToolbarSeparator style={{top: '6px', marginLeft: '4px', backgroundColor: Colors.lightWhite}}/></span>
             : '' }
 
           { user ?
@@ -66,12 +67,16 @@ class App extends Component {
               </IconButton>
               </span> }
         </div>
+      ),
+      titleElement = (
+        <div className={styles.title}>reword</div>
       );
 
     return (
       <div className="app">
         <AppBar
-          title="reword"
+          title={titleElement}
+          style={{paddingLeft: '20px'}}
           showMenuIconButton={false}
           iconStyleRight={{marginTop: 0, marginRight: 0, lineHeight: theme.appBar.height + 'px', fontSize: 24}}
           iconElementRight={elementRight}

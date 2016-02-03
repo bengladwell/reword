@@ -13,7 +13,7 @@ export default class AnimatedWords extends Component {
 
     this.wordSpacing = 5;
     this.rowHeight = 30;
-    this.gapRows = 6;
+    this.gapRows = 4;
 
     this.wordRefs = {};
 

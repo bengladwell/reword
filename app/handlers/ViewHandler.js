@@ -31,7 +31,15 @@ class ViewHandler extends Component {
 
         <PlayStopButton isPlaying={isPlaying} phrases={phrases} activePhraseIndex={activePhraseIndex} dispatch={dispatch} />
 
-        {user ? <Link to="/create"><FlatButton label="Create New Phrase" backgroundColor="#FFF" secondary={true} /></Link> : ''}
+        {user ? <Link to="/create">
+          <FlatButton
+            label="Create New Phrase"
+            backgroundColor="#FFF"
+            secondary={true}
+            style={{marginTop: 20}}
+            labelStyle={{padding: "0 10px"}}
+          />
+        </Link> : ''}
       </div>
     );
   }

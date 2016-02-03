@@ -2,7 +2,7 @@
   text-align: center;
   composes: appFont from "../../lib/css/typography.css";
   position: relative;
-  top: -120px;
+  top: -86px;
 }
 .createdBy {
   composes: body1 from "../../lib/css/typography.css";
