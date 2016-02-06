@@ -42,18 +42,18 @@ class CreatePhrase extends Component {
 
     // push phrase to the store
     if (phrase.length) {
-      let action = dispatch({
-        type: 'ADD_PHRASE',
+      let entity = firebase.child('phrases').push({
         user: authuser.id,
         date: Date.now(),
         words: phrase
       });
 
-      // push phrase to firebase
-      firebase.child('phrases').push({
-        user: action.user,
-        date: action.date,
-        words: action.words
+      dispatch({
+        type: 'PHRASE_ADD',
+        id: entity.key(),
+        user: authuser.id,
+        date: entity.val().date,
+        words: phrase
       });
 
       // redirect back to the view phrase page

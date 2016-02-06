@@ -84,6 +84,7 @@ export default class PlayStopButton extends Component {
 PlayStopButton.propTypes = {
   isPlaying: PropTypes.bool.isRequired,
   phrases: PropTypes.arrayOf(PropTypes.shape({
+    id: PropTypes.string.isRequired,
     date: PropTypes.number.isRequired,
     user: PropTypes.string.isRequired,
     words: PropTypes.arrayOf(PropTypes.string.isRequired).isRequired

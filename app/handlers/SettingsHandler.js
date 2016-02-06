@@ -6,10 +6,17 @@ import Settings from '../components/Settings/Settings';
 class SettingsHandler extends Component {
 
   render() {
-    const { settings, words, dispatch, history } = this.props;
+    const { user, phrases, settings, words, dispatch, history } = this.props;
 
     return (
-      <Settings settings={settings} words={words} dispatch={dispatch} history={history} />
+      <Settings
+        user={user}
+        phrases={phrases}
+        settings={settings}
+        words={words}
+        dispatch={dispatch}
+        history={history}
+      />
     );
   }
 
@@ -17,6 +24,15 @@ class SettingsHandler extends Component {
 
 SettingsHandler.propTypes = {
   settings: PropTypes.object,
+
+  user: PropTypes.object.isRequired,
+
+  phrases: PropTypes.arrayOf(PropTypes.shape({
+    id: PropTypes.string.isRequired,
+    date: PropTypes.number.isRequired,
+    user: PropTypes.string.isRequired,
+    words: PropTypes.arrayOf(PropTypes.string.isRequired).isRequired
+  }).isRequired).isRequired,
 
   words: PropTypes.arrayOf(PropTypes.shape({
     id: PropTypes.string.isRequired,
@@ -28,6 +44,8 @@ SettingsHandler.propTypes = {
 
 export default connect(state => {
   return {
+    user: state.user,
+    phrases: state.phrases,
     settings: state.settings,
     words: state.words
   };

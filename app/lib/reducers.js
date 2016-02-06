@@ -50,30 +50,6 @@ export function people(state = {}, action) {
   }
 }
 
-export function phrases(state = [], action) {
-  switch (action.type) {
-
-  case 'ADD_PHRASE':
-    return state.concat({
-      user: action.user,
-      date: action.date,
-      words: action.words
-    });
-
-  case 'ADD_PHRASES':
-    return state.concat(action.phrases.map((phrase) => {
-      return {
-        user: phrase.user,
-        date: phrase.date,
-        words: phrase.words
-      };
-    }));
-
-  default:
-    return state;
-  }
-}
-
 export function activePhraseIndex(state = 0, action) {
   switch (action.type) {
 

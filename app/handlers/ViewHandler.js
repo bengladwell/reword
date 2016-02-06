@@ -54,6 +54,7 @@ ViewHandler.propTypes = {
   }).isRequired).isRequired,
 
   phrases: PropTypes.arrayOf(PropTypes.shape({
+    id: PropTypes.string.isRequired,
     date: PropTypes.number.isRequired,
     user: PropTypes.string.isRequired,
     words: PropTypes.arrayOf(PropTypes.string.isRequired).isRequired

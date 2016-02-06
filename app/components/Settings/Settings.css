@@ -18,3 +18,6 @@
   margin: 0 auto;
   width: 85%;
 }
+.phrase {
+  composes: clearfix from "../../lib/css/common.css";
+}

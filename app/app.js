@@ -7,8 +7,9 @@ import { createHistory } from 'history';
 import Firebase from 'firebase';
 
 import config from '../config';
-import { words, creation, user as userReducer, phrases, activePhraseIndex, people } from './lib/reducers';
+import { words, creation, user as userReducer, activePhraseIndex, people } from './lib/reducers';
 import { isPlaying } from './lib/reducers/isPlaying';
+import { phrases } from './lib/reducers/phrases';
 import Routes from './lib/Routes';
 
 const reducer = combineReducers({
@@ -46,9 +47,9 @@ firebase.onAuth((authData) => {
 // load phrases from firebase
 firebase.child('phrases').once('value', (data) => {
   store.dispatch({
-    type: 'ADD_PHRASES',
-    phrases: _map(data.val(), (p) => {
-      return p;
+    type: 'PHRASE_ADD_MULTIPLE',
+    phrases: _map(data.val(), (p, id) => {
+      return Object.assign({}, p, {id});
     })
   });
 });
@@ -60,7 +61,7 @@ firebase.child('words').once('value', (data) => {
     type: 'ADD_WORDS',
     words: _map(fwords, (w, id) => {
       return {
-        id: id,
+        id,
         text: w.text
       };
     })
