@@ -24,24 +24,28 @@ export default class Settings extends Component {
 
     return (
       <div>
-        <div className={styles.heading}>Available words</div>
+        { user.id === config.adminUser ?
+        <div>
+          <div className={styles.heading}>Available words</div>
 
-        <div className={styles.wordGroup}>
-          {words.slice(0).sort((a, b) => {
-            return a.text > b.text ? 1 : (a.text < b.text ? -1 : 0);
-          }).map(function (word) {
-            return <div className={styles.word} key={word.id}><Word text={word.text} /></div>;
-          })}
+          <div className={styles.wordGroup}>
+            {words.slice(0).sort((a, b) => {
+              return a.text > b.text ? 1 : (a.text < b.text ? -1 : 0);
+            }).map(function (word) {
+              return <div className={styles.word} key={word.id}><Word text={word.text} /></div>;
+            })}
+          </div>
+
+          <div className={styles.addWords}>
+            <TextField hintText="Add words separated by newlines" multiLine={true} ref="newwords" />
+            <IconButton iconClassName="material-icons" tooltip="Save" style={{display: "block"}} onClick={() => {
+              this.addWords();
+            }}>done</IconButton>
+          </div>
+
+          <Divider/>
         </div>
-
-        <div className={styles.addWords}>
-          <TextField hintText="Add words separated by newlines" multiLine={true} ref="newwords" />
-          <IconButton iconClassName="material-icons" tooltip="Save" style={{display: "block"}} onClick={() => {
-            this.addWords();
-          }}>done</IconButton>
-        </div>
-
-        <Divider/>
+        : ''}
 
         <div className={styles.heading}>Your phrases</div>
         <div className={styles.wordGroup}>
