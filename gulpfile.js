@@ -10,6 +10,9 @@ var _ = require('underscore'),
   watchify = require('watchify'),
   babelify = require('babelify'),
   uglify = require('gulp-uglify'),
+  config = require('./config.json'),
+  template = require('gulp-template'),
+  rename = require('gulp-rename'),
   cssModulesify = require('css-modulesify'),
   merge = require('merge-stream'),
   livereload = require('gulp-livereload'),
@@ -58,6 +61,13 @@ gulp.task('bundle', ['lint'], function () {
     .pipe(isDev ? util.noop() : buffer())
     .pipe(isDev ? util.noop() : uglify())
     .pipe(gulp.dest('build/js/'));
+});
+
+gulp.task('security', function () {
+  return gulp.src('firebase-security.tmpl')
+    .pipe(template({adminUser: config.adminUser}))
+    .pipe(rename('firebase-security.json'))
+    .pipe(gulp.dest('.'));
 });
 
 gulp.task('serve', ['assets', 'bundle'], function () {
@@ -134,4 +144,4 @@ gulp.task('serve', ['assets', 'bundle'], function () {
 });
 
 
-gulp.task('default', ['assets', 'bundle']);
+gulp.task('default', ['security', 'assets', 'bundle']);

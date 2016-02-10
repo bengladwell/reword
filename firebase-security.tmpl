@@ -1,0 +1,24 @@
+{
+    "rules": {
+      "words": {
+        ".read": true,
+        ".write": "auth.uid == '<%= adminUser %>'"
+      },
+      "users": {
+        "$user_id": {
+          ".read": true,
+          ".write": "$user_id === auth.uid"
+        }
+      },
+      "phrases": {
+        ".read": true,
+        "$phrase_id": {
+          // !data.exists() - writing new entry
+          // data.child('user').val() === auth.id - the user making the call owns this
+          // auth required, anybody can write new entry, deletes and updates require matching user
+          ".write": "auth !== null && (!data.exists() || data.child('user').val() === auth.uid)"
+          //".write": "auth !== null"
+        }
+      }
+    }
+}

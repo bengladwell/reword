@@ -1,4 +1,5 @@
 {
   "firebase": "reword",
-  "public": "build"
+  "public": "build",
+  "rules": "firebase-security.json"
 }
