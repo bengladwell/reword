@@ -42,4 +42,4 @@ Dev server:
 `gulp serve`
 
 To deploy:  
-`NODE_ENV=production gulp && firebase deploy`
+`npm run deploy`

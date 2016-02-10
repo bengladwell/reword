@@ -4,7 +4,9 @@
   "description": "Phrase game in React/Redux",
   "main": "src/js/server.js",
   "scripts": {
-    "test": "node_modules/mocha/bin/mocha --compilers js:babel-core/register,js:css-modules-require-hook/index --require ./app/lib/test_setup.js app/**/*.test.js"
+    "test": "node_modules/mocha/bin/mocha --compilers js:babel-core/register,js:css-modules-require-hook/index --require ./app/lib/test_setup.js app/**/*.test.js",
+    "predeploy": "NODE_ENV=production gulp",
+    "deploy": "firebase deploy"
   },
   "author": "Ben Gladwell",
   "license": "ISC",
@@ -12,7 +14,8 @@
     "eslint-plugin-react": "^3.4.1",
     "express": "^4.13.3",
     "fbjs": "^0.6.0",
-    "firebase": "^2.3.1",
+    "firebase": "^2.4.0",
+    "firebase-tools": "^2.2.1",
     "history": "^1.14.0",
     "lodash.debounce": "^3.1.1",
     "lodash.map": "^3.1.4",
