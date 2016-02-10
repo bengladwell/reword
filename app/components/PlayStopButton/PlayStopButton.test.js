@@ -199,7 +199,7 @@ describe('PlayStopButton', () => {
       component.transitionNextPhrase();
 
       expect(component.props.dispatch.calledWithExactly({
-        type: 'INC_ACTIVE_PHRASE'
+        type: 'ACTIVE_PHRASE_INC'
       })).to.be.true;
     });
 
@@ -215,7 +215,7 @@ describe('PlayStopButton', () => {
 
       expect(component.props.dispatch.getCall(0).args).to.eql([{
       //expect(component.props.dispatch.calledWithExactly({
-        type: 'CHANGE_PHRASE',
+        type: 'ACTIVE_PHRASE_CHANGE',
         index: 0
       }]);
     });

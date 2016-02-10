@@ -6,7 +6,7 @@ import styles from './WordDropZone.css';
 const wordTarget = {
   drop(props, monitor, dropZone) {
     dropZone.context.store.dispatch({
-      type: 'MOVE_WORD',
+      type: 'CREATION_MOVE_WORD',
       space: props.space,
       word: monitor.getItem().id,
       index: monitor.getItem().index < props.index ? props.index - 1 : props.index

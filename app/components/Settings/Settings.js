@@ -93,7 +93,7 @@ export default class Settings extends Component {
       return word;
     }).forEach((word) => {
       this.props.dispatch({
-        type: 'ADD_WORD',
+        type: 'WORD_ADD',
         id: this.firebase.child('words').push({text: word}).key(),
         text: word
       });

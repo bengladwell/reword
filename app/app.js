@@ -37,7 +37,7 @@ firebase.onAuth((authData) => {
       image: authData.github.profileImageURL
     };
     store.dispatch({
-      type: 'ADD_USER',
+      type: 'USER_ADD',
       user: user
     });
     firebase.child('users').child(authData.uid).set(user);
@@ -58,7 +58,7 @@ firebase.child('phrases').once('value', (data) => {
 firebase.child('words').once('value', (data) => {
   const fwords = data.val();
   store.dispatch({
-    type: 'ADD_WORDS',
+    type: 'WORD_ADD_MULTIPLE',
     words: _map(fwords, (w, id) => {
       return {
         id,

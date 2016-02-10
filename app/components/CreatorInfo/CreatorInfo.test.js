@@ -35,7 +35,7 @@ describe('CreatorInfo', () => {
 
   describe('addFirebasePerson', () => {
 
-    it('should dispatch ADD_PERSON with new data', () => {
+    it('should dispatch PERSON_ADD with new data', () => {
 
       let component = new CreatorInfo({
         phrases: [{
@@ -57,7 +57,7 @@ describe('CreatorInfo', () => {
       });
 
       expect(component.props.dispatch.args).to.eql([[{
-        type: 'ADD_PERSON',
+        type: 'PERSON_ADD',
         id: 'key',
         name: 'name',
         image: 'image'
@@ -65,7 +65,7 @@ describe('CreatorInfo', () => {
 
     });
 
-    it('should not dispatch ADD_PERSON without new data', () => {
+    it('should not dispatch PERSON_ADD without new data', () => {
 
       let component = new CreatorInfo({
         phrases: [{

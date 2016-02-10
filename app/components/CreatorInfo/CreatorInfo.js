@@ -35,7 +35,7 @@ export default class CreatorInfo extends Component {
     const personData = data.val();
     if (personData) {
       this.props.dispatch({
-        type: 'ADD_PERSON',
+        type: 'PERSON_ADD',
         id: data.key(),
         name: personData.name,
         image: personData.image

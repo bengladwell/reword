@@ -25,7 +25,7 @@ export default class PhraseChanger extends Component {
               value={activePhraseIndex}
               onChange={(e, v) => {
                 dispatch({
-                  type: 'CHANGE_PHRASE',
+                  type: 'ACTIVE_PHRASE_CHANGE',
                   index: v
                 });
               }}

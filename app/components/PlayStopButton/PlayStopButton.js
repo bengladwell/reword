@@ -56,11 +56,11 @@ export default class PlayStopButton extends Component {
 
     if (activePhraseIndex + 1 < phrases.length) {
       dispatch({
-        type: 'INC_ACTIVE_PHRASE'
+        type: 'ACTIVE_PHRASE_INC'
       });
     } else {
       dispatch({
-        type: 'CHANGE_PHRASE',
+        type: 'ACTIVE_PHRASE_CHANGE',
         index: 0
       });
     }

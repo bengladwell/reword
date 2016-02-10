@@ -26,7 +26,7 @@ import update from 'react-addons-update';
 export function user(state = null, action) {
   switch (action.type) {
 
-  case 'ADD_USER':
+  case 'USER_ADD':
     return action.user;
 
   default:
@@ -37,7 +37,7 @@ export function user(state = null, action) {
 export function people(state = {}, action) {
   switch (action.type) {
 
-  case 'ADD_PERSON':
+  case 'PERSON_ADD':
     return Object.assign({}, state, {
       [action.id]: {
         name: action.name,
@@ -53,10 +53,10 @@ export function people(state = {}, action) {
 export function activePhraseIndex(state = 0, action) {
   switch (action.type) {
 
-  case 'INC_ACTIVE_PHRASE':
+  case 'ACTIVE_PHRASE_INC':
     return state + 1;
 
-  case 'CHANGE_PHRASE':
+  case 'ACTIVE_PHRASE_CHANGE':
     return action.index;
 
   default:
@@ -67,13 +67,13 @@ export function activePhraseIndex(state = 0, action) {
 export function words(state = [], action) {
   switch (action.type) {
 
-  case 'ADD_WORD':
+  case 'WORD_ADD':
     return state.concat({
       id: action.id,
       text: action.text
     });
 
-  case 'ADD_WORDS':
+  case 'WORD_ADD_MULTIPLE':
     return state.concat(action.words.map((word) => {
       return {
         id: word.id,
@@ -96,7 +96,7 @@ export function creation(state = {available: [], phrase: []}, action) {
       })
     });
 
-  case 'MOVE_WORD':
+  case 'CREATION_MOVE_WORD':
     if (action.space === 'AVAILABLE' && state.available[action.index] === action.word ||
         action.space === 'PHRASE' && state.phrase[action.index] === action.word) {
       return state;
@@ -126,7 +126,7 @@ export function creation(state = {available: [], phrase: []}, action) {
       });
     }
 
-    throw new TypeError('Unknown space for MOVE_WORD action');
+    throw new TypeError('Unknown space for CREATION_MOVE_WORD action');
 
   default:
     return state;
