@@ -1,5 +1,9 @@
 {
   "firebase": "reword",
   "public": "build",
-  "rules": "firebase-security.json"
+  "rules": "firebase-security.json",
+  "rewrites": [{
+    "source": "**",
+    "destination": "/index.html"
+  }]
 }
