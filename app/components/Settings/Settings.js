@@ -35,7 +35,7 @@ export default class Settings extends Component {
         </div>
 
         <div className={styles.addWords}>
-          <TextField floatingLabelText="Add words separated by newlines" multiLine={true} ref="newwords" />
+          <TextField hintText="Add words separated by newlines" multiLine={true} ref="newwords" />
           <IconButton iconClassName="material-icons" tooltip="Save" style={{display: "block"}} onClick={() => {
             this.addWords();
           }}>done</IconButton>
