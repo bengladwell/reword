@@ -18,8 +18,6 @@ import update from 'react-addons-update';
  *
  *  // people is an indexed list of users who have created phrases
  *  people: { <id>: { name, image } ... },
- *
- *  router: <from react-router/redux-router>
  * }
  */
 

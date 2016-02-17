@@ -107,9 +107,13 @@ export default class Settings extends Component {
     this.refs.newwords.clearValue();
 
     // redirect to view phrases page
-    this.props.history.push("/");
+    this.context.router.push("/");
   }
 }
+
+Settings.contextTypes = {
+  router: PropTypes.object.isRequired
+};
 
 Settings.propTypes = {
   user: PropTypes.object.isRequired,
@@ -128,7 +132,5 @@ Settings.propTypes = {
     text: PropTypes.string.isRequired
   }).isRequired).isRequired,
 
-  dispatch: PropTypes.func.isRequired,
-
-  history: PropTypes.object.isRequired
+  dispatch: PropTypes.func.isRequired
 };

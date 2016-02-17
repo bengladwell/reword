@@ -28,6 +28,12 @@ Check out the latest version at https://reword.firebaseapp.com/
 ### Where are the action creators and action constants?
 I started building this project using the action creator and action constant conventions advocated in the Redux docs. I evenually found that the additional indirection wasn't helpful to me, so I removed them in favor of passing object literals. [Apparently](http://rackt.org/redux/docs/basics/Actions.html#note-on-boilerplate), this is an ok thing to do.
 
+### What about [redux-router](https://github.com/acdlite/redux-router) or [react-router-redux](https://github.com/reactjs/react-router-redux)?
+I started out using redux-router to inject router state into the app state. However, I realized that there wasn't a real need for it. I occassionally needed a reference to the current router location, but it was just as easy to use the router reference from context, which is the standard react-router way of doing things. Removing one of the many, many library dependencies was also satisfying.
+
+## What about shrinkwrapping those npm dependencies?
+I started out doing that too. But for now, I have found it better to keep up with dependency changes.
+
 ## Tests
 `npm test`  
 

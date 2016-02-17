@@ -17,8 +17,7 @@ describe('Settings', () => {
           user: 'test/user',
           words: ['0', '1']
         }],
-        dispatch: sinon.spy(),
-        history: {}
+        dispatch: sinon.spy()
       });
 
       sinon.stub(component.firebase, 'child').returns(component.firebase);

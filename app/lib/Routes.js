@@ -1,7 +1,5 @@
-import React, { Component, PropTypes } from 'react';
-import { Provider } from 'react-redux';
-import { ReduxRouter } from 'redux-router';
-import { IndexRoute, Route } from 'react-router';
+import React, { Component } from 'react';
+import { IndexRoute, Router, Route, browserHistory } from 'react-router';
 
 import App from '../components/App/App';
 import CreateHandler from '../handlers/CreateHandler';
@@ -10,22 +8,16 @@ import SettingsHandler from '../handlers/SettingsHandler';
 
 // this component just sets up the routing rules
 
-export default class Root extends Component {
+export default class Routes extends Component {
   render() {
     return (
-      <Provider store={this.props.store}>
-        <ReduxRouter>
-          <Route path="/" component={App}>
-            <IndexRoute component={ViewHandler} />
-            <Route path="create" component={CreateHandler} />
-            <Route path="settings" component={SettingsHandler} />
-          </Route>
-        </ReduxRouter>
-      </Provider>
+      <Router history={browserHistory}>
+        <Route path="/" component={App}>
+          <IndexRoute component={ViewHandler} />
+          <Route path="create" component={CreateHandler} />
+          <Route path="settings" component={SettingsHandler} />
+        </Route>
+      </Router>
     );
   }
 }
-
-Root.proptypes = {
-  store: PropTypes.object.isRequired
-};

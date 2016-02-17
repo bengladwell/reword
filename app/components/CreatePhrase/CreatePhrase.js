@@ -36,28 +36,30 @@ class CreatePhrase extends Component {
   }
 
   submitPhrase() {
-    const { creation, authuser, history, dispatch } = this.props,
+    const { creation, authuser, dispatch } = this.props,
       { phrase } = creation,
+      now = Date.now(),
       firebase = new Firebase(`https://${config.firebaseApp}.firebaseio.com`);
 
     // push phrase to the store
     if (phrase.length) {
-      let entity = firebase.child('phrases').push({
+      firebase.child('phrases').push({
         user: authuser.id,
-        date: Date.now(),
+        date: now,
         words: phrase
-      });
+      }).then((entity) => {
 
-      dispatch({
-        type: 'PHRASE_ADD',
-        id: entity.key(),
-        user: authuser.id,
-        date: entity.val().date,
-        words: phrase
-      });
+        dispatch({
+          type: 'PHRASE_ADD',
+          id: entity.key(),
+          user: authuser.id,
+          date: now,
+          words: phrase
+        });
 
-      // redirect back to the view phrase page
-      history.push("/");
+        // redirect back to the view phrase page
+        this.context.router.push("/");
+      });
     }
 
   }
@@ -118,6 +120,10 @@ class CreatePhrase extends Component {
 
 }
 
+CreatePhrase.contextTypes = {
+  router: PropTypes.object.isRequired
+};
+
 CreatePhrase.propTypes = {
 
   words: PropTypes.arrayOf(PropTypes.shape({
@@ -132,9 +138,7 @@ CreatePhrase.propTypes = {
 
   authuser: PropTypes.object,
 
-  dispatch: PropTypes.func.isRequired,
-
-  history: PropTypes.object.isRequired
+  dispatch: PropTypes.func.isRequired
 
 };
 

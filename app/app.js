@@ -1,9 +1,8 @@
 import _map from 'lodash.map';
 import React from 'react';
 import ReactDOM from 'react-dom';
+import { Provider } from 'react-redux';
 import { createStore, combineReducers } from 'redux';
-import { routerStateReducer, reduxReactRouter } from 'redux-router';
-import { createHistory } from 'history';
 import Firebase from 'firebase';
 
 import config from '../config';
@@ -13,7 +12,6 @@ import { phrases } from './lib/reducers/phrases';
 import Routes from './lib/Routes';
 
 const reducer = combineReducers({
-  router: routerStateReducer,
   words,
   creation,
   user: userReducer,
@@ -23,7 +21,7 @@ const reducer = combineReducers({
   isPlaying
 });
 
-const store = reduxReactRouter({ createHistory })(createStore)(reducer);
+const store = createStore(reducer);
 
 const firebase = new Firebase(`https://${config.firebaseApp}.firebaseio.com`);
 
@@ -69,5 +67,5 @@ firebase.child('words').once('value', (data) => {
 });
 
 document.addEventListener('DOMContentLoaded', () => {
-  ReactDOM.render(<Routes store={store} />, document.getElementById('root'));
+  ReactDOM.render(<Provider store={store}><Routes/></Provider>, document.getElementById('root'));
 });

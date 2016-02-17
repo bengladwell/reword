@@ -5,7 +5,7 @@ import CreatePhrase from '../components/CreatePhrase/CreatePhrase';
 
 class CreateHandler extends Component {
   render() {
-    const { words, creation, authuser, dispatch, history } = this.props;
+    const { words, creation, authuser, dispatch } = this.props;
 
     return (
       <CreatePhrase
@@ -13,7 +13,6 @@ class CreateHandler extends Component {
         creation={creation}
         authuser={authuser}
         dispatch={dispatch}
-        history={history}
       />
     );
   }

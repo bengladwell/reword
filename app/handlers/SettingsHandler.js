@@ -6,7 +6,7 @@ import Settings from '../components/Settings/Settings';
 class SettingsHandler extends Component {
 
   render() {
-    const { user, phrases, settings, words, dispatch, history } = this.props;
+    const { user, phrases, settings, words, dispatch } = this.props;
 
     return (
       <Settings
@@ -15,7 +15,6 @@ class SettingsHandler extends Component {
         settings={settings}
         words={words}
         dispatch={dispatch}
-        history={history}
       />
     );
   }
