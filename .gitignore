@@ -2,4 +2,5 @@ build
 node_modules
 
 /config.json
+/firebase.json
 /firebase-security.json

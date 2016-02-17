@@ -19,7 +19,7 @@ var _ = require('underscore'),
   nodemon = require('nodemon');
 
 gulp.task('lint', function () {
-  return gulp.src(['**/*.js', '!server/index.js', '!build/**'])
+  return gulp.src(['**/*.js', '!node_modules/**', '!server/index.js', '!build/**'])
     .pipe(eslint({
       rules: process.env.NODE_ENV === 'development' ? {
         "no-console": 0,
@@ -63,11 +63,17 @@ gulp.task('bundle', ['lint'], function () {
     .pipe(gulp.dest('build/js/'));
 });
 
-gulp.task('security', function () {
-  return gulp.src('firebase-security.tmpl')
-    .pipe(template({adminUser: config.adminUser}))
-    .pipe(rename('firebase-security.json'))
-    .pipe(gulp.dest('.'));
+gulp.task('firebase', function () {
+  return merge(
+    gulp.src('firebase-security.tmpl')
+      .pipe(template({adminUser: config.adminUser}))
+      .pipe(rename('firebase-security.json'))
+      .pipe(gulp.dest('.')),
+    gulp.src('firebase.tmpl')
+      .pipe(template({firebaseApp: config.firebaseApp}))
+      .pipe(rename('firebase.json'))
+      .pipe(gulp.dest('.'))
+  );
 });
 
 gulp.task('serve', ['assets', 'bundle'], function () {
@@ -144,4 +150,4 @@ gulp.task('serve', ['assets', 'bundle'], function () {
 });
 
 
-gulp.task('default', ['security', 'assets', 'bundle']);
+gulp.task('default', ['firebase', 'assets', 'bundle']);
