@@ -6,7 +6,8 @@ import { createStore, combineReducers } from 'redux';
 import Firebase from 'firebase';
 
 import config from '../config';
-import { words, creation, user as userReducer, activePhraseIndex, people } from './lib/reducers';
+import { words, user as userReducer, activePhraseIndex, people } from './lib/reducers';
+import { creation } from './lib/reducers/creation';
 import { isPlaying } from './lib/reducers/isPlaying';
 import { phrases } from './lib/reducers/phrases';
 import Routes from './lib/Routes';
